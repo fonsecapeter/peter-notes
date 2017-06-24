@@ -5,13 +5,9 @@ require 'optparse'
 
 module Peter
   module Notes
-    options = {}
     OptionParser.new do |opts|
-      opts.banner = "Usage: example.rb [options]"
+      opts.banner = "Usage: peter-notes.rb [options] <file-glob>"
 
-      opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-        options[:verbose] = v
-      end
     end.parse!
   end
 end
