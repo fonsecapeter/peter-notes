@@ -11,3 +11,24 @@ module Peter
     end.parse!
   end
 end
+
+def open_notes(glob=nil)
+  cur_dir = Dir.pwd
+  notes_dir = preferences['notes_dir']
+  editor = preferences['editor']
+  Dir.chdir(notes_dir)
+  if glob.nil?
+    system("#{editor} #{glob}")
+  else
+    system("#{editor} ./")
+  end
+  Dir.chdir(cur_dir)
+end
+
+
+begin
+  glob = ARGV[0]
+  open_notes(glob)
+rescue
+  open_notes
+end
