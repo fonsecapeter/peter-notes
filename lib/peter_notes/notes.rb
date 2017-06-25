@@ -17,10 +17,12 @@ def open_notes(glob=nil)
   notes_dir = preferences['notes_dir']
   editor = preferences['editor']
   Dir.chdir(notes_dir)
-  if glob.nil?
-    system("#{editor} #{glob}")
+  if not glob.nil?
+    found_globs = `find ./ -name #{glob}`
+    found_glob = found_globs.split('\n')[0]
+    system("#{editor} #{found_glob}")
   else
-    system("#{editor} ./")
+    system("#{editor}")
   end
   Dir.chdir(cur_dir)
 end
