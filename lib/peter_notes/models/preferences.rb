@@ -1,17 +1,21 @@
 require 'yaml'
 
+home = ENV['HOME']
+DEFAULT_EDITOR = 'vim'
+DEFAULT_NOTES_DIR = "#{home}/Notes"
+PREFS_FILE = "#{home}/.peter-notes.yml"
+
+
 def preferences
-  home = ENV['HOME']
   defaults = <<-EOM
-editor: vim
-notes_dir: #{home}/GoogleDrive/Notes
+editor: #{DEFAULT_EDITOR}
+notes_dir: #{DEFAULT_NOTES_DIR}
 EOM
-  prefs_file = "#{home}/.peter-notes.yml"
-  if File.exists?(prefs_file)
-    prefs = YAML::load_file(prefs_file)
+  if File.exists?(PREFS_FILE)
+    prefs = YAML::load_file(PREFS_FILE)
     return(prefs)
   else
-    File.write(prefs_file, defaults)
+    File.write(PREFS_FILE, defaults)
     return preferences
   end
 end

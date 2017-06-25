@@ -1,39 +1,36 @@
 require_relative 'console_app'
+require_relative 'preferences'
 
 class Notes < ConsoleApp
   def initialize(prefs)
-    @notes_dir = prefs['notes_dir']
-    @editor = prefs['editor']
+    @editor = prefs['editor'] || DEFAULT_EDITOR
+    @notes_dir = prefs['notes_dir'] || DEFAULT_NOTES_DIR
     super
   end
 
-  def find_notes_by_glob(glob)
-    found_globs = `find ./ -name #{glob}`
-    return found_globs.split('\n')
+  def find(glob)
+    found = `find ./ -name #{glob}`
+    return found.split('\n')
   end
 
   def open_notes(glob=nil)
     cur_dir = Dir.pwd
     Dir.chdir(@notes_dir)
     if glob.nil?
-      system("#{@editor}")
+      found = './'
     else
-      found_glob = find_notes_by_glob(glob)[0]
-      system("#{@editor} #{found_glob}")
+      found = find(glob)[0]
     end
+    system("#{@editor} #{found}")
     Dir.chdir(cur_dir)
   end
 
-  def search
-    system("grep --color=always -r #{@notes_dir} -e #{@search_regex}")
+  def search(regex)
+    system("grep --color=always -r #{@notes_dir} -e #{regex}")
   end
 
   def run
-    if @search_regex
-      self.search
-    else
-      glob = ARGV[0]
-      self.open_notes(glob)
-    end
+    glob = ARGV[0]
+    self.open_notes(glob)
   end
 end
