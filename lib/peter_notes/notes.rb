@@ -12,14 +12,18 @@ module Peter
   end
 end
 
+def find_notes_by_glob(glob)
+  found_globs = `find ./ -name #{glob}`
+  return found_globs.split('\n')
+end
+
 def open_notes(glob=nil)
   cur_dir = Dir.pwd
   notes_dir = preferences['notes_dir']
   editor = preferences['editor']
   Dir.chdir(notes_dir)
   if not glob.nil?
-    found_globs = `find ./ -name #{glob}`
-    found_glob = found_globs.split('\n')[0]
+    found_glob = find_notes_by_glob(glob)[0]
     system("#{editor} #{found_glob}")
   else
     system("#{editor}")
