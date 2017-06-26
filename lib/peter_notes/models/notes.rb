@@ -29,6 +29,10 @@ class Notes < ConsoleApp
     system("grep --color=always -r #{@notes_dir} -e #{regex}")
   end
 
+  def list(path)
+    system("tree #{@notes_dir}/#{path}")
+  end
+
   def run
     glob = ARGV[0]
     self.open_notes(glob)
