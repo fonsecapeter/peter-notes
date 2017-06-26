@@ -3,10 +3,10 @@ peter-notes(1) -- manage your notes from the terminal
 
 ## SYNOPSIS
 
-`peter-notes` [<file-glob>] <br>
-`peter-notes` `-s`|`--search` <regex> <br>
-`peter-notes` `-f`|`--find` <file-glob> <br>
-`peter-notes` `-l`|`--list` [<path>] <br>
+`notes` [<file-glob>] <br>
+`notes` `-s`|`--search` <regex> <br>
+`notes` `-f`|`--find` <file-glob> <br>
+`notes` `-l`|`--list` [<path>] <br>
 
 ## DESCRIPTION
 
@@ -40,15 +40,15 @@ For these examples, lets assume you have the following notes:
         +-- motorcycle.txt
 
 The most common use is to simply open your notes. To do this, just
-run `peter-notes` with no arguments or options to open them all.
+run `notes` with no arguments or options to open them all.
 
 If you want to open a single note, you can pass in a `file-glob` to
 specify which notes you want to open. To open just `motorcycle.txt` you
-can run `peter-notes motorcycle.txt`, or `peter-notes other/motorcycle.txt`, or
-even `peter-notes motorcycle*`.
+can run `notes motorcycle.txt`, or `notes other/motorcycle.txt`, or
+even `notes motorcycle*`.
 
 If you wanted to open all notes under `projects/` you could also use
-this same idea and run `peter-notes projects`.
+this same idea and run `notes projects`.
 
 ## PREFERENCES
 

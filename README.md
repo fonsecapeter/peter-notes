@@ -8,7 +8,7 @@ Manage your notes from the commandline. This lightweight tool will stay out of t
 
 ## Usage
 
-`peter-notes`. Yeah.
+`notes`. Yeah.
 
 But you can do more!
 
@@ -21,11 +21,11 @@ For these examples, lets assume you have the following notes:
     +-- other
         +-- motorcycle.txt
 
-The most common use is to simply open your notes. To do this, just run `peter-notes` with no arguments or options to open them all.
+The most common use is to simply open your notes. To do this, just run `notes` with no arguments or options to open them all.
 
-If you want to open a single note, you can pass in a `file-glob` to specify which notes you want to open. To open just `motorcycle.txt` you can run `peter-notes motorcycle.txt`, or `peter-notes other/motorcycle.txt`, or even `peter-notes motorcycle*`.
+If you want to open a single note, you can pass in a `file-glob` to specify which notes you want to open. To open just `motorcycle.txt` you can run `notes motorcycle.txt`, or `notes other/motorcycle.txt`, or even `notes motorcycle*`.
 
-If you wanted to open all notes under `projects/` you could also use this same idea and run `peter-notes projects`.
+If you wanted to open all notes under `projects/` you could also use this same idea and run `notes projects`.
 
 You also get some super-helpful optional flags:
   - `-s`, `--search=<regex>`:
@@ -51,7 +51,7 @@ Preferences are saved in `~/.peter-notes.yml`. There are just 2 options that you
   **Default Value**: `vim`
 
   - `notes_dir`:
-  The home of your notes. This is where `peter-notes` will look for them.
+  The home of your notes. This is where `notes` will look for them.
 
   **Possible Values**: any valid + existing dorectory path. I use `~/GoogleDrive/Notes` because I track mine in google drive (OverGrive for linux).
 
