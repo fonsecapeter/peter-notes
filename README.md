@@ -2,9 +2,11 @@
 
   - `bundle install`
   - `rspec spec`
-  - `peter-notes`
-  - `peter-notes <glob>`
+  - `rake install`
   - `peter-notes --help`
+
+If changing man page
+  - `ronn man/peter-notes.1.ronn`
 
 ## Installation
 
