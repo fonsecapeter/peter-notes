@@ -3,7 +3,7 @@ require 'optparse'
 class ConsoleApp
   def run
     OptionParser.new do |opts|
-      opts.banner = 'Usage: peter-notes [options]'
+      opts.banner = 'Usage: notes [options]'
       opts.separator('')
       opts.separator('Options:')
       opts.separator('    [FILE-GLOB]                      Open the first file that matches FILE-GLOB if supplied')

@@ -7,16 +7,16 @@
 \fBpeter\-notes\fR \- manage your notes from the terminal
 .
 .SH "SYNOPSIS"
-\fBpeter\-notes\fR [\fIfile\-glob\fR]
+\fBnotes\fR [\fIfile\-glob\fR]
 .
 .br
-\fBpeter\-notes\fR \fB\-s\fR|\fB\-\-search\fR \fIregex\fR
+\fBnotes\fR \fB\-s\fR|\fB\-\-search\fR \fIregex\fR
 .
 .br
-\fBpeter\-notes\fR \fB\-f\fR|\fB\-\-find\fR \fIfile\-glob\fR
+\fBnotes\fR \fB\-f\fR|\fB\-\-find\fR \fIfile\-glob\fR
 .
 .br
-\fBpeter\-notes\fR \fB\-l\fR|\fB\-\-list\fR [\fIpath\fR]
+\fBnotes\fR \fB\-l\fR|\fB\-\-list\fR [\fIpath\fR]
 .
 .br
 .
@@ -57,13 +57,13 @@ For these examples, lets assume you have the following notes:
 .IP "" 0
 .
 .P
-The most common use is to simply open your notes\. To do this, just run \fBpeter\-notes\fR with no arguments or options to open them all\.
+The most common use is to simply open your notes\. To do this, just run \fBnotes\fR with no arguments or options to open them all\.
 .
 .P
-If you want to open a single note, you can pass in a \fBfile\-glob\fR to specify which notes you want to open\. To open just \fBmotorcycle\.txt\fR you can run \fBpeter\-notes motorcycle\.txt\fR, or \fBpeter\-notes other/motorcycle\.txt\fR, or even \fBpeter\-notes motorcycle*\fR\.
+If you want to open a single note, you can pass in a \fBfile\-glob\fR to specify which notes you want to open\. To open just \fBmotorcycle\.txt\fR you can run \fBnotes motorcycle\.txt\fR, or \fBnotes other/motorcycle\.txt\fR, or even \fBnotes motorcycle*\fR\.
 .
 .P
-If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBpeter\-notes projects\fR\.
+If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBnotes projects\fR\.
 .
 .SH "PREFERENCES"
 Preferences are saved in \'~/\.peter\-notes\.yml\'\. There are just 2 options that you can set:
