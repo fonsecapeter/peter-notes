@@ -1,7 +1,7 @@
 require 'optparse'
 
 class ConsoleApp
-  def initialize(*args)
+  def run
     OptionParser.new do |opts|
       opts.banner = 'Usage: peter-notes [options]'
       opts.separator('')

@@ -1,21 +1,48 @@
 require 'yaml'
 
-home = ENV['HOME']
-DEFAULT_EDITOR = 'vim'
-DEFAULT_NOTES_DIR = "#{home}/Notes"
-PREFS_FILE = "#{home}/.peter-notes.yml"
 
+class Preferences
+  attr_reader :editor, :notes_dir, :preferences
 
-def preferences
-  defaults = <<-EOM
-editor: #{DEFAULT_EDITOR}
-notes_dir: #{DEFAULT_NOTES_DIR}
+  def initialize(prefs=nil)
+    @preferences = prefs || load_preferences
+    @editor = @preferences[:editor]
+    @notes_dir = @preferences[:notes_dir]
+  end
+
+  private
+
+  def load_yaml_preferences(prefs_file)
+    prefs = YAML::load_file(prefs_file)
+    return(
+      prefs.inject({}) do |processed, (key, val)|
+        processed[key.to_sym] = val
+        processed
+      end
+     )
+  end
+
+  def write_yaml_defaults(prefs_file, defaults)
+    default_yaml = <<-EOM
+editor: #{defaults[:editor]}
+notes_dir: #{defaults[:notes_dir]}
 EOM
-  if File.exists?(PREFS_FILE)
-    prefs = YAML::load_file(PREFS_FILE)
-    return(prefs)
-  else
-    File.write(PREFS_FILE, defaults)
-    return preferences
+    File.write(prefs_file, default_yaml)
+  end
+
+  def load_preferences
+    home = ENV['HOME']
+    defaults = {
+      editor: 'vim',
+      notes_dir: "#{home}/Notes"
+    }
+    prefs_file = "#{home}/.peter-notes.yml"
+    if File.exists?(prefs_file)
+      prefs = load_yaml_preferences(prefs_file)
+      return(defaults.merge(prefs))
+    else
+      write_yaml_defaults(prefs_file, defaults)
+      return load_preferences
+    end
   end
 end
