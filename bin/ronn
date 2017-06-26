@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+ronn man/peter-notes.7.ronn
