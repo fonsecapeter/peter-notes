@@ -3,30 +3,28 @@ require_relative 'preferences'
 
 class Notes < ConsoleApp
   def initialize(prefs)
-    @editor = prefs['editor'] || DEFAULT_EDITOR
-    @notes_dir = prefs['notes_dir'] || DEFAULT_NOTES_DIR
-    super
+    @editor = prefs.editor
+    @notes_dir = prefs.notes_dir
+  end
+
+  def search(regex)
+    system("grep --color=always -r #{@notes_dir} -e #{regex}")
   end
 
   def find(glob)
-    found = `find ./ -name #{glob}`
+    found = `find #{@notes_dir} -name #{glob}`
     return found.split('\n')
   end
 
   def open_notes(glob=nil)
-    cur_dir = Dir.pwd
-    Dir.chdir(@notes_dir)
+    enter_dir
     if glob.nil?
       found = './'
     else
       found = find(glob)[0]
     end
     system("#{@editor} #{found}")
-    Dir.chdir(cur_dir)
-  end
-
-  def search(regex)
-    system("grep --color=always -r #{@notes_dir} -e #{regex}")
+    leave_dir
   end
 
   def list(path)
@@ -34,7 +32,20 @@ class Notes < ConsoleApp
   end
 
   def run
+    super
     glob = ARGV[0]
-    self.open_notes(glob)
+    open_notes(glob)
   end
+
+  private
+
+  def enter_dir
+    @cur_dir = Dir.pwd
+    Dir.chdir(@notes_dir)
+  end
+
+  def leave_dir
+    Dir.chdir(@cur_dir)
+  end
+
 end
