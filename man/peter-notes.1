@@ -1,0 +1,62 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "PETER\-NOTES" "1" "June 2017" "" ""
+.
+.SH "NAME"
+\fBpeter\-notes\fR \- manage your notes from the terminal
+.
+.SH "SYNOPSIS"
+\fBpeter\-notes\fR [\fIfile\-glob\fR] \fBpeter\-notes\fR \fB\-s\fR|\fB\-\-search\fR \fIregex\fR \fBpeter\-notes\fR \fB\-f\fR|\fB\-\-find\fR \fIfile\-glob\fR \fBpeter\-notes\fR \fB\-l\fR|\fB\-\-list\fR [\fIpath\fR]
+.
+.SH "DESCRIPTION"
+This document describes the \fBpeter\-notes\fR tool\. This simple ruby gem can be used to manage personal notes from the terminal\. Preferences are saved in \fB~/\.peter\-notes\.yml\fR
+.
+.SH "OPTIONS"
+These options provide some extra utility beyond simply opening notes for editing\.
+.
+.TP
+\fB\-s\fR, \fB\-\-search\fR=\fIregex\fR
+Search within notes for text matching the supplied regex\.
+.
+.TP
+\fB\-f\fR, \fB\-\-find=<file\-glob>\fR
+Seach for notes that match the supplied bash\-style file glob\.
+.
+.TP
+\fB\-l\fR, \fB\-\-list=[<path>]\fR
+List all notes or, if a \fB<path>\fR is supplied, list notes within the supplied path
+.
+.SH "EXAMPLES"
+For these examples, lets assume you have the following notes:
+.
+.IP "" 4
+.
+.nf
+
+/Users/peter/Notes/projects/jarbs\.txt
+/Users/peter/Notes/projects/peter_notes\.txt
+
+/Users/peter/Notes/other/honda\.txt
+.
+.fi
+.
+.IP "" 0
+.
+.P
+The most common use is to simply open your notes\. To do this, just run \fBpeter\-notes\fR with no arguments or options to open them all\.
+.
+.P
+If you want to open a single note, you can pass in a \fBfile\-glob\fR to specify which notes you want to open\. To open just \fBhonda\.txt\fR you can run \fBpeter\-notes honda\.txt\fR, or \fBpeter\-notes other/honda\.txt\fR, or even \fBpeter\-notes honda*\fR\.
+.
+.P
+If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBpeter\-notes projects\fR\.
+.
+.SH "AUTHORS"
+Peter Fonseca \fIpeter\.nfonseca@gmail\.com\fR
+.
+.SH "SEE ALSO"
+This tool runs on top of a few very useful bash utilities and relies on terminal\-accessible text\-editors\. It was also written in a fantastic language called ruby\.
+.
+.P
+bash(1), grep(1), find(1), tree(1), vim(1), ruby(1)
