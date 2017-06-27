@@ -5,7 +5,7 @@ require "peter_notes/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "peter-notes"
-  spec.version       = Peter::Notes::VERSION
+  spec.version       = PeterNotes::VERSION
   spec.authors       = ["Peter Fonseca"]
   spec.email         = ["peter.nfonseca@gmail.com"]
 
