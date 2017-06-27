@@ -1,10 +1,11 @@
 require 'spec_helper'
 require 'peter_notes/models/preferences'
 
+
 RSpec.describe Preferences do
   before(:each) do
     @editor = 'kilo'
-    @notes_dir = 'notes_dir'
+    @notes_dir = '/home/peter/secret_nuclear_missile_codes'
     @prefs_dict = {
       editor: @editor,
       notes_dir: @notes_dir
@@ -13,12 +14,38 @@ RSpec.describe Preferences do
 
   it 'accepts values' do
     prefs = Preferences.new(@prefs_dict)
-    expect(prefs.preferences).to be @prefs_dict
+    expect(prefs.preferences).to eq(@prefs_dict)
   end
 
-  it 'saves values to attributes' do
+  it 'sets values to attributes' do
     prefs = Preferences.new(@prefs_dict)
-    expect(prefs.editor).to be @editor
-    expect(prefs.notes_dir).to be @notes_dir
+    expect(prefs.editor).to eq(@editor)
+    expect(prefs.notes_dir).to eq(@notes_dir)
+  end
+
+  it 'loads yaml' do
+    expect(File).to receive(:exists?).with(Preferences.prefs_file).and_return(true)
+    expect(YAML).to receive(:load_file).with(Preferences.prefs_file).and_return(@prefs_dict)
+    prefs = Preferences.new
+    expect(prefs.preferences).to eq(@prefs_dict)
+  end
+
+  it 'merges yaml with defaults' do
+    new_pref = {notes_dir: @notes_dir}
+    expect(File).to receive(:exists?).with(Preferences.prefs_file).and_return(true)
+    expect(YAML).to receive(:load_file).with(Preferences.prefs_file).and_return(new_pref)
+    prefs = Preferences.new
+    expect(prefs.preferences).to eq(Preferences.defaults.merge(new_pref))
+  end
+
+  it 'sets defaults if none given or found in yaml' do
+    expect(File).to receive(:exists?).with(Preferences.prefs_file).and_return(false)
+    prefs = Preferences.new
+    expect(prefs.preferences).to eq(Preferences.defaults)
+  end
+
+  it 'can write defaults to yaml' do
+    expect(File).to receive(:write).with(Preferences.prefs_file, Preferences.defaults.to_yaml)
+    Preferences.write_yaml_defaults
   end
 end
