@@ -1,4 +1,11 @@
+require 'simplecov'
+require 'simplecov-console'
 require 'bundler/setup'
+
+SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.start do
+  add_filter 'models/console_app'  # just implements optparse
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
