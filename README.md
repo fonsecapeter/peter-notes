@@ -52,7 +52,7 @@ That's like what 90% of what you'll ever need and no crazy macros or flags to me
   - `-l`, `--list [PATH]`:
   List all notes or, if a `PATH` is specified, list notes within the specified path. Bet you thought this was running `ls -r`, well it's actually running [tree](http://linuxcommand.org/man_pages/tree1.html) because it's much cooler -- `tree YOUR-NOTES-DIR/PATH`.
 
-Oh yeah, make sure your terminal has `grep`, `find`, and `tree`. It should, but depends on how crazy your 'gear' is.
+Oh yeah, make sure your terminal has `grep`, `find`, and `tree`. It should, but depends on how crazy your 'gear' is. Also, this is a cli tool, don't try to import it into some ruby source code.
 
 ## Preferences
 
