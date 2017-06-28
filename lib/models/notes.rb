@@ -14,7 +14,14 @@ class Notes < ConsoleApp
   end
 
   def find(glob)
-    found = `find #{@notes_dir} -name #{glob}`
+    parsed = glob.split('/')
+    glob_terminus = parsed.pop
+    glob_path = parsed.join('/')
+    cmd = "find \"#{@notes_dir}\" -name \"#{glob_terminus}\""
+    if glob_path != ''
+      cmd += " | grep \"#{glob_path}\""
+    end
+    found = `#{cmd}`
     return found.split
   end
 
