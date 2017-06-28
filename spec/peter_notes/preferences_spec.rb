@@ -1,6 +1,5 @@
 require 'spec_helper'
-require 'peter_notes/models/preferences'
-
+require 'models/preferences'
 
 RSpec.describe Preferences do
   before(:each) do

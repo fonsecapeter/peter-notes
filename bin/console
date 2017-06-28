@@ -2,8 +2,8 @@
 
 require "pry"
 require "bundler/setup"
-require "peter_notes/models/console_app"
-require "peter_notes/models/notes"
-require "peter_notes/models/preferences"
+require "models/console_app"
+require "models/notes"
+require "models/preferences"
 
 Pry.start
