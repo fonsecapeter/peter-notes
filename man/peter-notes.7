@@ -7,16 +7,16 @@
 \fBpeter\-notes\fR \- manage your notes from the terminal
 .
 .SH "SYNOPSIS"
-\fBnotes\fR [\fIfile\-glob\fR]
+\fBnotes\fR [\fIFILE\-GLOB\fR]
 .
 .br
-\fBnotes\fR \fB\-s\fR|\fB\-\-search\fR \fIregex\fR
+\fBnotes\fR \fB\-s\fR|\fB\-\-search\fR \fIREGEX\fR
 .
 .br
-\fBnotes\fR \fB\-f\fR|\fB\-\-find\fR \fIfile\-glob\fR
+\fBnotes\fR \fB\-f\fR|\fB\-\-find\fR \fIFILE\-GLOB\fR
 .
 .br
-\fBnotes\fR \fB\-l\fR|\fB\-\-list\fR [\fIpath\fR]
+\fBnotes\fR \fB\-l\fR|\fB\-\-list\fR [\fIPATH\fR]
 .
 .br
 .
@@ -27,19 +27,25 @@ This document describes the \fBpeter\-notes\fR tool\. This simple ruby gem is an
 These options provide some extra utility beyond simply opening notes for editing\.
 .
 .TP
-\fB\-s\fR, \fB\-\-search\fR=\fIregex\fR
-Search within notes for text matching the supplied regex\.
+\fB\-s\fR, \fB\-\-search <REGEX>\fR
+Search within notes for text matching the specified \fBREGEX\fR\. If you havent guessed, this is the grep \fIhttp://linuxcommand\.org/man_pages/grep1\.html\fR part\. Specifically, its running \fBgrep \-r YOUR\-NOTES\-DIR \-e REGEX\fR\.
 .
 .TP
-\fB\-f\fR, \fB\-\-find=<file\-glob>\fR
-Seach for notes that match the supplied bash\-style file glob\.
+\fB\-f\fR, \fB\-\-find <FILE\-GLOB>\fR
+Seach for notes that match the specified file\-glob\. This ones running find \fIhttp://linuxcommand\.org/man_pages/find1\.html\fR \-\- \fBfind YOUR\-NOTES\-DIR \-name FILE\-GLOB\fR\. Its a little more than that though, this will be fuzzy in that you can add some path info to your glob\. For example, if you ran \fBnotes \-\-find "projects/*\.txt"\fR, youd get back both \fBprojects/python/jarbs\.txt\fR and \fBprojects/ruby/peter_notes\.txt\fR\. So its better than just find\. A little\.
 .
 .TP
-\fB\-l\fR, \fB\-\-list=[<path>]\fR
-List all notes or, if a \fB<path>\fR is supplied, list notes within the supplied path
+\fB\-l\fR, \fB\-\-list [<PATH>]\fR
+List all notes or, if a \fBPATH\fR is specified, list notes within the specified path\. Bet you thought this was running \fBls \-r\fR, well its actually running tree \fIhttp://linuxcommand\.org/man_pages/tree1\.html\fR because its much cooler \-\- \fBtree YOUR\-NOTES\-DIR/PATH\fR\.
 .
 .SH "EXAMPLES"
-For these examples, lets assume you have the following notes:
+\fBnotes\fR\. Yeah\.
+.
+.P
+But you can do more!
+.
+.P
+Lets assume you have the following notes:
 .
 .IP "" 4
 .
@@ -47,8 +53,10 @@ For these examples, lets assume you have the following notes:
 
 /Users/peter/Notes/
 |\-\- projects
-|   |\-\- jarbs\.txt
-|   +\-\- peter_notes\.txt
+|   |\-\- python
+|   |   +\-\- jarbs\.txt
+|   +\-\- ruby
+|       +\-\- peter_notes\.txt
 +\-\- other
     +\-\- motorcycle\.txt
 .
@@ -57,13 +65,22 @@ For these examples, lets assume you have the following notes:
 .IP "" 0
 .
 .P
-The most common use is to simply open your notes\. To do this, just run \fBnotes\fR with no arguments or options to open them all\.
+Most of the time you just want to open them\. To do that, just type \fBnotes\fR\. You can specify your text editor and where your notes are in \fB~/peter\-notes\.yaml\fR (see the preferences section below)\.
 .
 .P
-If you want to open a single note, you can pass in a \fBfile\-glob\fR to specify which notes you want to open\. To open just \fBmotorcycle\.txt\fR you can run \fBnotes motorcycle\.txt\fR, or \fBnotes other/motorcycle\.txt\fR, or even \fBnotes motorcycle*\fR\.
+If you want to open a specific note, you can pass in a \fBfile\-glob\fR to specify which notes you want to open\. If you think a file glob is what happens when you spill coffee on your computer, just check this out this \fIhttp://tldp\.org/LDP/abs/html/globbingref\.html\fR or google it (hint, you use it in bash a lot, like, when you \fBls *\.rb\fR)\.
 .
 .P
-If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBnotes projects\fR\.
+If you just want to open \fBother/motorcycle\.txt\fR you can run \fBnotes "other/motorcycle\.txt"\fR\. But thats kind of lame, so you could also fo \fBnotes "motorcycle\.txt"\fR, or even \fBnotes "moto*"\fR\. If youre feeling extra crazy, you could even get away with \fBm*\fR in this case, basically if you pass a glob in, \fBpeter\-notes\fR will just take the first match in \fB\-\-find\fR (see below) and open that\.
+.
+.P
+If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBnotes "projects"\fR\.
+.
+.P
+Thats like what 90% of what youll ever need and no crazy macros or flags to memorize\. Not bad right? Well not all flags are bad, in fact, you also get some super\-helpful optional ones for the other 10%, just look above at the OPTIONS section\.
+.
+.P
+Oh yeah, make sure your terminal has \fBgrep\fR, \fBfind\fR, and \fBtree\fR\. It should, but depends on how crazy your \'gear\' is\.
 .
 .SH "PREFERENCES"
 Preferences are saved in \'~/\.peter\-notes\.yml\'\. There are just 2 options that you can set:
@@ -88,6 +105,20 @@ notes_dir:
                      \'~/GoogleDrive/Notes\' because I track mine in
                      google drive (OverGrive for linux)\.
     Default Value: \'~/Notes\'
+.
+.fi
+.
+.IP "" 0
+.
+.P
+That\'s yaml \fIhttp://www\.yaml\.org/start\.html\fR so it should look like this:
+.
+.IP "" 4
+.
+.nf
+
+editor: vim
+notes_dir: /home/peter/Notes
 .
 .fi
 .

@@ -20,6 +20,7 @@ class Preferences
 
   def initialize(prefs=nil)
     @preferences = prefs || load_preferences
+    @preferences[:notes_dir] = File.expand_path(@preferences[:notes_dir])
     @editor = @preferences[:editor]
     @notes_dir = @preferences[:notes_dir]
   end

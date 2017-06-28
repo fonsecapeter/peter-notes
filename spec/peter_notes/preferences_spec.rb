@@ -47,4 +47,12 @@ RSpec.describe Preferences do
     expect(File).to receive(:write).with(Preferences.prefs_file, Preferences.defaults.to_yaml)
     Preferences.write_yaml_defaults
   end
+
+  it 'expands paths' do
+    notes_dir = '~/seret_nuclear_missile_codes'
+    @prefs_dict[:notes_dir] = notes_dir
+    prefs = Preferences.new(@prefs_dict)
+    expect(prefs.notes_dir).to eq(File.expand_path(notes_dir))
+    expect(prefs.preferences[:notes_dir]).to eq(File.expand_path(notes_dir))
+  end
 end
