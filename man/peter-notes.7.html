@@ -76,10 +76,10 @@
 
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p><code>notes</code> [<var>file-glob</var>] <br />
-<code>notes</code> <code>-s</code>|<code>--search</code> <var>regex</var> <br />
-<code>notes</code> <code>-f</code>|<code>--find</code> <var>file-glob</var> <br />
-<code>notes</code> <code>-l</code>|<code>--list</code> [<var>path</var>] <br /></p>
+<p><code>notes</code> [<var>FILE-GLOB</var>] <br />
+<code>notes</code> <code>-s</code>|<code>--search</code> <var>REGEX</var> <br />
+<code>notes</code> <code>-f</code>|<code>--find</code> <var>FILE-GLOB</var> <br />
+<code>notes</code> <code>-l</code>|<code>--list</code> [<var>PATH</var>] <br /></p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
@@ -92,35 +92,41 @@ gem is an awesome way to manage personal notes from the terminal.</p>
 for editing.</p>
 
 <dl>
-<dt><code>-s</code>, <code>--search</code>=<var>regex</var></dt><dd><p>Search within notes for text matching the supplied regex.</p></dd>
-<dt><code>-f</code>, <code>--find=&lt;file-glob></code></dt><dd><p>Seach for notes that match the supplied bash-style file glob.</p></dd>
-<dt><code>-l</code>, <code>--list=[&lt;path>]</code></dt><dd><p>List all notes or, if a <code>&lt;path></code> is supplied, list notes within
-the supplied path</p></dd>
+<dt><code>-s</code>, <code>--search &lt;REGEX></code></dt><dd><p>Search within notes for text matching the specified <code>REGEX</code>. If you havent guessed, this is the <a href="http://linuxcommand.org/man_pages/grep1.html">grep</a> part. Specifically, its running <code>grep -r YOUR-NOTES-DIR -e REGEX</code>.</p></dd>
+<dt><code>-f</code>, <code>--find &lt;FILE-GLOB></code></dt><dd><p>Seach for notes that match the specified file-glob. This ones running <a href="http://linuxcommand.org/man_pages/find1.html">find</a> -- <code>find YOUR-NOTES-DIR -name FILE-GLOB</code>. Its a little more than that though, this will be fuzzy in that you can add some path info to your glob. For example, if you ran <code>notes --find "projects/*.txt"</code>, youd get back both <code>projects/python/jarbs.txt</code> and <code>projects/ruby/peter_notes.txt</code>. So its better than just find. A little.</p></dd>
+<dt><code>-l</code>, <code>--list [&lt;PATH>]</code></dt><dd><p>List all notes or, if a <code>PATH</code> is specified, list notes within the specified path. Bet you thought this was running <code>ls -r</code>, well its actually running <a href="http://linuxcommand.org/man_pages/tree1.html">tree</a> because its much cooler -- <code>tree YOUR-NOTES-DIR/PATH</code>.</p></dd>
 </dl>
 
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
 
-<p>For these examples, lets assume you have the following notes:</p>
+<p><code>notes</code>. Yeah.</p>
+
+<p>But you can do more!</p>
+
+<p>Lets assume you have the following notes:</p>
 
 <pre><code>/Users/peter/Notes/
 |-- projects
-|   |-- jarbs.txt
-|   +-- peter_notes.txt
+|   |-- python
+|   |   +-- jarbs.txt
+|   +-- ruby
+|       +-- peter_notes.txt
 +-- other
     +-- motorcycle.txt
 </code></pre>
 
-<p>The most common use is to simply open your notes. To do this, just
-run <code>notes</code> with no arguments or options to open them all.</p>
+<p>Most of the time you just want to open them. To do that, just type <code>notes</code>. You can specify your text editor and where your notes are in <code>~/peter-notes.yaml</code> (see the preferences section below).</p>
 
-<p>If you want to open a single note, you can pass in a <code>file-glob</code> to
-specify which notes you want to open. To open just <code>motorcycle.txt</code> you
-can run <code>notes motorcycle.txt</code>, or <code>notes other/motorcycle.txt</code>, or
-even <code>notes motorcycle*</code>.</p>
+<p>If you want to open a specific note, you can pass in a <code>file-glob</code> to specify which notes you want to open. If you think a file glob is what happens when you spill coffee on your computer, just check this out <a href="http://tldp.org/LDP/abs/html/globbingref.html">this</a> or google it (hint, you use it in bash a lot, like, when you <code>ls *.rb</code>).</p>
 
-<p>If you wanted to open all notes under <code>projects/</code> you could also use
-this same idea and run <code>notes projects</code>.</p>
+<p>If you just want to open <code>other/motorcycle.txt</code> you can run <code>notes "other/motorcycle.txt"</code>. But thats kind of lame, so you could also fo <code>notes "motorcycle.txt"</code>, or even <code>notes "moto*"</code>. If youre feeling extra crazy, you could even get away with <code>m*</code> in this case, basically if you pass a glob in, <code>peter-notes</code> will just take the first match in <code>--find</code> (see below) and open that.</p>
+
+<p>If you wanted to open all notes under <code>projects/</code> you could also use this same idea and run <code>notes "projects"</code>.</p>
+
+<p>Thats like what 90% of what youll ever need and no crazy macros or flags to memorize. Not bad right? Well not all flags are bad, in fact, you also get some super-helpful optional ones for the other 10%, just look above at the OPTIONS section.</p>
+
+<p>Oh yeah, make sure your terminal has <code>grep</code>, <code>find</code>, and <code>tree</code>. It should, but depends on how crazy your 'gear' is.</p>
 
 <h2 id="PREFERENCES">PREFERENCES</h2>
 
@@ -145,9 +151,15 @@ notes_dir:
     Default Value: '~/Notes'
 </code></pre>
 
+<p>That's <a href="http://www.yaml.org/start.html">yaml</a> so it should look like this:</p>
+
+<pre><code>editor: vim
+notes_dir: /home/peter/Notes
+</code></pre>
+
 <h2 id="AUTHORS">AUTHORS</h2>
 
-<p>Peter Fonseca <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x70;&#101;&#116;&#101;&#x72;&#x2e;&#110;&#x66;&#111;&#110;&#x73;&#101;&#99;&#97;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#x63;&#111;&#109;" data-bare-link="true">&#x70;&#101;&#116;&#x65;&#114;&#x2e;&#110;&#x66;&#x6f;&#110;&#115;&#x65;&#x63;&#97;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
+<p>Peter Fonseca <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x70;&#101;&#x74;&#x65;&#114;&#46;&#x6e;&#102;&#x6f;&#x6e;&#115;&#x65;&#x63;&#x61;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;" data-bare-link="true">&#x70;&#x65;&#116;&#101;&#x72;&#46;&#x6e;&#x66;&#111;&#110;&#115;&#101;&#x63;&#x61;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
 
 <h2 id="SEE-ALSO">SEE ALSO</h2>
 
