@@ -2,6 +2,8 @@ require_relative 'console_app'
 require_relative 'preferences'
 
 class Notes < ConsoleApp
+  attr_reader :editor, :notes_dir
+
   def initialize(prefs)
     @editor = prefs.editor
     @notes_dir = prefs.notes_dir
@@ -13,15 +15,14 @@ class Notes < ConsoleApp
 
   def find(glob)
     found = `find #{@notes_dir} -name #{glob}`
-    return found.split('\n')
+    return found.split
   end
 
   def open_notes(glob=nil)
     enter_dir
-    if glob.nil?
+    found = find(glob)[0]
+    if found.nil?
       found = './'
-    else
-      found = find(glob)[0]
     end
     system("#{@editor} #{found}")
     leave_dir
