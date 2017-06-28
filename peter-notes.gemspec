@@ -5,7 +5,7 @@ require "peter_notes/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "peter-notes"
-  spec.version       = Peter::Notes::VERSION
+  spec.version       = PeterNotes::VERSION
   spec.authors       = ["Peter Fonseca"]
   spec.email         = ["peter.nfonseca@gmail.com"]
 
@@ -34,4 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "ronn", "~> 0.7.3"
+  spec.add_development_dependency "pry", "~> 0.10.4"
+  spec.add_development_dependency "simplecov-console", "~> 0.4.2"
 end
