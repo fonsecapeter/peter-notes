@@ -12,7 +12,6 @@ RSpec.describe Notes do
     expect(@notes.notes_dir).to eq(@prefs.notes_dir)
   end
 
-
   it 'can find notes' do
     glob = 'note_*.txt'
     paths = "#{@prefs.notes_dir}/note_0.txt\n#{@prefs.notes_dir}/note_1.txt\n"

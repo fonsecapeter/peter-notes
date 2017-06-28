@@ -25,7 +25,7 @@ class Notes < ConsoleApp
     return found.split
   end
 
-  def open_notes(glob=nil)
+  def open_notes(glob)
     enter_dir
     found = find(glob)[0]
     if found.nil?
@@ -41,7 +41,7 @@ class Notes < ConsoleApp
 
   def run
     super
-    glob = ARGV[0]
+    glob = ARGV[0] || ''
     open_notes(glob)
   end
 
