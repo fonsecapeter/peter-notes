@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'models/notes'
+require 'peter_notes/version'
 
 RSpec.describe Notes do
   before(:each) do
@@ -12,6 +13,11 @@ RSpec.describe Notes do
     expect(@notes.notes_dir).to eq(@prefs.notes_dir)
   end
 
+  it 'opens notes on run' do
+    expect(@notes).to receive(:open_notes).with('')
+    @notes.on_run('')
+  end
+
   it 'can find notes' do
     glob = 'note_*.txt'
     paths = "#{@prefs.notes_dir}/note_0.txt\n#{@prefs.notes_dir}/note_1.txt\n"
@@ -22,9 +28,10 @@ RSpec.describe Notes do
 
   it 'can find notes within dirs fuzzily' do
     glob_path = 'secret/nuclear'
+    fuzzy_path = glob_path.gsub('/', '.*')
     glob_terminus = 'codes_*.txt'
     glob = "#{glob_path}/#{glob_terminus}"
-    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob_terminus}\" | grep \"#{glob_path}\""
+    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob_terminus}\" | grep -e \"#{fuzzy_path}\""
     expect(@notes).to receive(:`).with(cmd).and_return("#{@prefs.notes_dir}/#{glob}\n")
     @notes.find(glob)
   end
@@ -55,6 +62,10 @@ RSpec.describe Notes do
     regex = '^enemies$'
     expect(@notes).to receive(:system).with("grep --color=always -r #{@prefs.notes_dir} -e #{regex}")
     @notes.search(regex)
+  end
+
+  it 'has a version' do
+    expect(@notes.version).to eq(PeterNotes::VERSION)
   end
 
   private

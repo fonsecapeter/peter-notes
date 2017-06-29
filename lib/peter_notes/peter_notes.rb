@@ -1,6 +1,6 @@
-require_relative "version"
-require_relative '../models/preferences'
-require_relative '../models/notes'
+require "peter_notes/version"
+require 'models/preferences'
+require 'models/notes'
 
 def run
   preferences = Preferences.new

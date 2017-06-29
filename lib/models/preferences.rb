@@ -18,6 +18,10 @@ class Preferences
     @@prefs_file
   end
 
+  def self.defaults_yaml
+    @@defaults.to_yaml
+  end
+
   def initialize(prefs=nil)
     @preferences = prefs || load_preferences
     @preferences[:notes_dir] = File.expand_path(@preferences[:notes_dir])
@@ -26,7 +30,7 @@ class Preferences
   end
 
   def self.write_yaml_defaults
-    File.write(@@prefs_file, @@defaults.to_yaml)
+    File.write(@@prefs_file, self.defaults_yaml)
   end
 
   private
