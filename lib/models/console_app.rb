@@ -3,8 +3,8 @@ require 'models/preferences'
 
 class ConsoleApp
   def run
-    arg = ARGV[0] || ''
-    OptionParser.new do |opts|
+    arg = ARGV[0]
+    options = OptionParser.new do |opts|
       opts.banner = 'Usage: notes [options]'
       opts.separator('')
       opts.separator('Options:')
@@ -18,7 +18,7 @@ class ConsoleApp
         exit(0)
       end
       opts.on('-l', '--list [PATH]', 'List all notes', '  (list notes under PATH if supplied)') do |path|
-        puts(self.list(path))
+        self.list(path)
         exit(0)
       end
       opts.on('-h', '--help', 'Show this message') do
@@ -35,7 +35,13 @@ class ConsoleApp
 
       opts.separator('')
       opts.separator("Documentation at https://github.com/fonsecapeter/peter-notes or man peter-notes")
-    end.parse!
+    end
+    begin
+      options.parse!
+    rescue OptionParser::InvalidOption
+      puts(options)
+      exit(1)
+    end
     self.on_run(arg)
   end
 end
