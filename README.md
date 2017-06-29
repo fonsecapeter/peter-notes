@@ -84,7 +84,7 @@ If you're changing the man page, generate roff and html files with `bin/ronn`.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 
-To release a new version, first update the version number in `lib/peter_notes/version.rb`, then build the gem with `bundle exec rake build`. Now you can and push the `.gem` file to [rubygems.org](https://rubygems.org) with `gem push pkg/peter-notes-VERSION.gem`.
+To release a new version, first update the version number in `lib/peter_notes/version.rb`, then build the gem with `bundle exec rake build`. Install locally and confirm nothing broke, push a commit [Major, Minor, Patch] version bump. Now you can push the `.gem` file to [rubygems.org](https://rubygems.org) with `gem push pkg/peter-notes-VERSION.gem`. Throw a git tag on there `bin/tag`.
 
 ## Contributing
 
