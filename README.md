@@ -1,4 +1,4 @@
-# Peter Notes <a href="https://travis-ci.org/fonsecapeter/peter-notes"><img src="https://travis-ci.org/fonsecapeter/peter-notes.svg?branch=master"></img></a>
+# Peter Notes [![Gem Version](https://badge.fury.io/rb/peter-notes.svg)](https://badge.fury.io/rb/peter-notes)  <a href="https://travis-ci.org/fonsecapeter/peter-notes"><img src="https://travis-ci.org/fonsecapeter/peter-notes.svg?branch=master"></img></a>
 
 Manage your notes from the console. ([ruby gem](https://rubygems.org/gems/peter-notes/))
 
