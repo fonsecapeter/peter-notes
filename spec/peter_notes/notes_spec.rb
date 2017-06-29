@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'models/notes'
+require 'peter_notes/version'
 
 RSpec.describe Notes do
   before(:each) do
@@ -10,6 +11,11 @@ RSpec.describe Notes do
   it 'takes in preferences' do
     expect(@notes.editor).to eq(@prefs.editor)
     expect(@notes.notes_dir).to eq(@prefs.notes_dir)
+  end
+
+  it 'opens notes on run' do
+    expect(@notes).to receive(:open_notes).with('')
+    @notes.on_run('')
   end
 
   it 'can find notes' do
@@ -55,6 +61,10 @@ RSpec.describe Notes do
     regex = '^enemies$'
     expect(@notes).to receive(:system).with("grep --color=always -r #{@prefs.notes_dir} -e #{regex}")
     @notes.search(regex)
+  end
+
+  it 'has a version' do
+    expect(@notes.version).to eq(PeterNotes::VERSION)
   end
 
   private

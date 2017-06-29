@@ -44,7 +44,7 @@ RSpec.describe Preferences do
   end
 
   it 'can write defaults to yaml' do
-    expect(File).to receive(:write).with(Preferences.prefs_file, Preferences.defaults.to_yaml)
+    expect(File).to receive(:write).with(Preferences.prefs_file, Preferences.defaults_yaml)
     Preferences.write_yaml_defaults
   end
 

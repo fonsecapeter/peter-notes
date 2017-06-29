@@ -1,4 +1,5 @@
 require 'optparse'
+require 'models/preferences'
 
 class ConsoleApp
   def run
@@ -24,6 +25,13 @@ class ConsoleApp
         puts(opts)
         exit(0)
       end
+      opts.on('-v', '--version', 'Show version') do
+        puts(self.version)
+        exit(0)
+      end
+      opts.separator('')
+      opts.separator("Preferences are loaded from #{Preferences.prefs_file} and should look like:")
+      opts.separator(Preferences.defaults_yaml)
     end.parse!
     self.on_run(arg)
   end

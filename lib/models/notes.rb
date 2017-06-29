@@ -1,5 +1,6 @@
-require_relative 'console_app'
-require_relative 'preferences'
+require 'models/console_app'
+require 'models/preferences'
+require 'peter_notes/version'
 
 class Notes < ConsoleApp
   attr_reader :editor, :notes_dir
@@ -41,6 +42,10 @@ class Notes < ConsoleApp
 
   def on_run(glob)
     open_notes(glob)
+  end
+
+  def version
+    return PeterNotes::VERSION
   end
 
   private
