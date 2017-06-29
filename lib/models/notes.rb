@@ -18,7 +18,6 @@ class Notes < ConsoleApp
     glob_path, glob_terminus = File.split(glob)
     glob_path.gsub!(File::SEPARATOR, '.*')
     cmd = "find \"#{@notes_dir}\" -name \"#{glob_terminus}\""
-    puts("#{glob} -> #{glob_path}, #{glob_terminus}")
     if glob_path != '.'  # FILE::split breaks out . for bare file names
       cmd += " | grep -e \"#{glob_path}\""
     end
