@@ -15,6 +15,7 @@ class Notes < ConsoleApp
   end
 
   def find(glob)
+    return [] if glob.nil? || glob.empty?
     glob_path, glob_terminus = File.split(glob)
     glob_path.gsub!(File::SEPARATOR, '.*')
     cmd = "find \"#{@notes_dir}\" -name \"#{glob_terminus}\""
@@ -36,6 +37,7 @@ class Notes < ConsoleApp
   end
 
   def list(path)
+    path = path || ''
     notes_path = File.join(@notes_dir, path)
     system("tree #{notes_path}")
   end
