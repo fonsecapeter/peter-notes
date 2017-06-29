@@ -15,12 +15,12 @@ class Notes < ConsoleApp
   end
 
   def find(glob)
-    parsed = glob.split('/')
-    glob_terminus = parsed.pop
-    glob_path = parsed.join('/')
+    glob_path, glob_terminus = File.split(glob)
+    glob_path.gsub!(File::SEPARATOR, '.*')
     cmd = "find \"#{@notes_dir}\" -name \"#{glob_terminus}\""
-    if glob_path != ''
-      cmd += " | grep \"#{glob_path}\""
+    puts("#{glob} -> #{glob_path}, #{glob_terminus}")
+    if glob_path != '.'  # FILE::split breaks out . for bare file names
+      cmd += " | grep -e \"#{glob_path}\""
     end
     found = `#{cmd}`
     return found.split
@@ -37,7 +37,8 @@ class Notes < ConsoleApp
   end
 
   def list(path)
-    system("tree #{@notes_dir}/#{path}")
+    notes_path = File.join(@notes_dir, path)
+    system("tree #{notes_path}")
   end
 
   def on_run(glob)

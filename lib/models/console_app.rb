@@ -13,7 +13,7 @@ class ConsoleApp
         self.search(regex)
         exit(0)
       end
-      opts.on('-f', '--find FILE-GLOB', 'Find notes that match FILE-GLOB') do |glob|
+      opts.on('-f', '--find FILE-GLOB', 'Find notes that fuzzily match FILE-GLOB') do |glob|
         puts(self.find(glob))
         exit(0)
       end
@@ -32,6 +32,9 @@ class ConsoleApp
       opts.separator('')
       opts.separator("Preferences are loaded from #{Preferences.prefs_file} and should look like:")
       opts.separator(Preferences.defaults_yaml)
+
+      opts.separator('')
+      opts.separator("Documentation at https://github.com/fonsecapeter/peter-notes or man peter-notes")
     end.parse!
     self.on_run(arg)
   end

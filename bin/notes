@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$LOAD_PATH << 'lib'
 
 require_relative '../lib/peter_notes/peter_notes.rb'
 run

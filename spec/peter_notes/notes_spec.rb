@@ -28,9 +28,10 @@ RSpec.describe Notes do
 
   it 'can find notes within dirs fuzzily' do
     glob_path = 'secret/nuclear'
+    fuzzy_path = glob_path.gsub('/', '.*')
     glob_terminus = 'codes_*.txt'
     glob = "#{glob_path}/#{glob_terminus}"
-    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob_terminus}\" | grep \"#{glob_path}\""
+    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob_terminus}\" | grep -e \"#{fuzzy_path}\""
     expect(@notes).to receive(:`).with(cmd).and_return("#{@prefs.notes_dir}/#{glob}\n")
     @notes.find(glob)
   end
