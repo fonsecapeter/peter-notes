@@ -32,7 +32,8 @@ RSpec.describe Notes do
   it 'can open all notes' do
     expect_cds
     expect_open('./')
-    @notes.run
+    expect(@notes).to receive(:find).with('').and_return([])
+    @notes.open_notes('')  # ARGV[0] is set to '' if not given
   end
 
   it 'uses find to open one note' do

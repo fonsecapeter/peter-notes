@@ -1,3 +1,9 @@
+<div>
+  <a href="https://travis-ci.org/fonsecapeter/peter-notes">
+    <img src="https://travis-ci.org/fonsecapeter/peter-notes.svg?branch=master"></img>
+  </a>
+</div>
+
 # Peter Notes
 
 Manage your notes from the console.

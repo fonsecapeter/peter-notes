@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rspec spec
+rake spec
