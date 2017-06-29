@@ -39,9 +39,7 @@ class Notes < ConsoleApp
     system("tree #{@notes_dir}/#{path}")
   end
 
-  def run
-    super
-    glob = ARGV[0] || ''
+  def on_run(glob)
     open_notes(glob)
   end
 
