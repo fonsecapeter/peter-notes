@@ -7,7 +7,8 @@ RSpec.describe Preferences do
     @notes_dir = '/home/peter/secret_nuclear_missile_codes'
     @prefs_dict = {
       editor: @editor,
-      notes_dir: @notes_dir
+      notes_dir: @notes_dir,
+      ignore_extension?: false,
     }
   end
 
@@ -20,6 +21,11 @@ RSpec.describe Preferences do
     prefs = Preferences.new(@prefs_dict)
     expect(prefs.editor).to eq(@editor)
     expect(prefs.notes_dir).to eq(@notes_dir)
+  end
+
+  it 'doesnt set values that arent there' do
+    prefs = Preferences.new
+    expect {prefs.banana}.to raise_error(NoMethodError)
   end
 
   it 'loads yaml' do

@@ -33,17 +33,19 @@ Most of the time you just want to open them. To do that, type `notes`. You can s
 
 If you want to open a specific note, you can pass in a `file-glob` to specify which notes you want to open. If you think a file glob is what happens when you spill coffee on your computer, just check this out [this](http://tldp.org/LDP/abs/html/globbingref.html) or google it (hint, you use it in bash a lot, like, when you `ls *.rb`).
 
-Now, lets say you want to open `other/motorcycle.txt`. You could run `notes "other/motorcycle.txt"`. But that's kind of lame, so you could also do `notes "motorcycle.txt"`, or even `notes "moto*"`. If you're feeling extra crazy, you could get away with `m*` here. Basically if you pass a glob in, `peter-notes` will just take the first match from `--find` (see below) and open that.
+Now, lets say you want to open `other/motorcycle.txt`. You could run `notes "other/motorcycle"`. But that's kind of lame, so you could also do `notes "motorcycle"`, or even `notes "moto*"`. If you're feeling extra crazy, you could get away with `m*` here. Basically if you pass a glob in, `peter-notes` will just take the first match from `--find` (see below) and open that.
 
-If you wanted to open all notes under `projects/` you could also use this same idea and run `notes "projects"`.
+If you wanted to open all notes under `projects/` you could also use this same idea and run `notes "projects"`.g
+g
+The close observer will have noted that I'm never adding `.txt` to my commands. That's not  because `peter-notes` requires `.txt` files. In fact, you can use markdown or whatever kind of files you want, `peter-notes` will just totally ignore file extensions by default and only ever look at the file name. If you prefer to type file extensions, just add `ignore_extension?: false` to your `~/.peter-notes.yml`.
 
 That's like what 90% of what you'll ever need and no crazy macros or flags to memorize. Not bad right? Well not all flags are bad, in fact, you also get some super-helpful optional ones for the other 10%:
 
   - `-s`, `--search REGEX`:
-  Search within notes for text matching the specified `REGEX`. This isn't magic, it's just [grep](http://linuxcommand.org/man_pages/grep1.html). Specifically, it's running `grep -r YOUR-NOTES-DIR -e REGEX`.
+  Search within notes for text matching the specified `REGEX`, ex: `notes --search ".*TODO.*"`. This isn't magic, it's just [grep](http://linuxcommand.org/man_pages/grep1.html). Specifically, it's running `grep -r YOUR-NOTES-DIR -e REGEX`.
 
   - `-f`, `--find FILE-GLOB`:
-  Seach for notes that match the specified file-glob. This one's running [find](http://linuxcommand.org/man_pages/find1.html) -- `find YOUR-NOTES-DIR -name FILE-GLOB`. It's a little more than that though, this will be fuzzy in that you can add some path info to your glob. For example, if you ran `notes --find "projects/*.txt"`, you'd get back both `projects/python/jarbs.txt` and `projects/ruby/peter_notes.txt`. So it's better than just find. A little.
+  Seach for notes that match the specified file-glob. This one's running [find](http://linuxcommand.org/man_pages/find1.html) -- `find YOUR-NOTES-DIR -name FILE-GLOB`. It's a little more than that though, this will be fuzzy in that you can add some path info to your glob. For example, if you ran `notes --find "projects/*"` (or `notes --find "pro/*"`), you'd get back both `projects/python/jarbs.txt` and `projects/ruby/peter_notes.txt`. So it's better than just find. A little.
 
   - `-l`, `--list [PATH]`:
   List all notes or, if a `PATH` is specified, list notes within the specified path. Bet you thought this was running `ls -R`, well it's actually running [tree](http://linuxcommand.org/man_pages/tree1.html) because it's much cooler -- `tree YOUR-NOTES-DIR/PATH`.
@@ -52,7 +54,7 @@ Oh yeah, make sure your terminal has `grep`, `find`, and `tree`. It should, but 
 
 ## Preferences
 
-Preferences are saved in `~/.peter-notes.yml`. There are just 2 options that you can set so don't freak out:
+Preferences are saved in `~/.peter-notes.yml`. There are just 333 options that you can set so don't freak out:
 
   - `editor`:
   The editor of your choice. This value will get passed to bash so make sure you use the exact name your terminal will understand.
@@ -68,6 +70,13 @@ Preferences are saved in `~/.peter-notes.yml`. There are just 2 options that you
   **Possible Values**: any valid + existing dorectory path. I use `~/GoogleDrive/Notes` because I track mine in google drive (OverGrive for linux).
 
   **Default Value**: `~/Notes`
+
+  - `ignore_extension?`:
+  Whether or not you want `peter-notes` to ignore file-type extensions.
+
+  **Possible Values**: `[true, false]`
+
+  **Default Value**: `true`
 
 That's [yaml](http://www.yaml.org/start.html) so it should look like this:
 

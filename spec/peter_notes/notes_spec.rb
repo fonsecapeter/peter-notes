@@ -9,8 +9,7 @@ RSpec.describe Notes do
   end
 
   it 'takes in preferences' do
-    expect(@notes.editor).to eq(@prefs.editor)
-    expect(@notes.notes_dir).to eq(@prefs.notes_dir)
+    expect(@notes.preferences).to eq(@prefs)
   end
 
   it 'opens notes on run' do
@@ -19,9 +18,9 @@ RSpec.describe Notes do
   end
 
   it 'can find notes' do
-    glob = 'note_*.txt'
+    glob = 'note_*'
     paths = "#{@prefs.notes_dir}/note_0.txt\n#{@prefs.notes_dir}/note_1.txt\n"
-    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob}\""
+    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob}.*\""
     expect(@notes).to receive(:`).with(cmd).and_return(paths)
     expect(@notes.find(glob)).to eq(paths.split)
   end
@@ -29,11 +28,20 @@ RSpec.describe Notes do
   it 'can find notes within dirs fuzzily' do
     glob_path = 'secret/nuclear'
     fuzzy_path = glob_path.gsub('/', '.*')
-    glob_terminus = 'codes_*.txt'
+    glob_terminus = 'codes_*'
     glob = "#{glob_path}/#{glob_terminus}"
-    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob_terminus}\" | grep -e \"#{fuzzy_path}\""
+    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob_terminus}.*\" | grep -e \"#{fuzzy_path}\""
     expect(@notes).to receive(:`).with(cmd).and_return("#{@prefs.notes_dir}/#{glob}\n")
     @notes.find(glob)
+  end
+
+  it 'wont ignore extensions if prefs.ignore_extensions? == false' do
+    prefs = Preferences.new({notes_dir: @prefs.notes_dir, ignore_extension?: false})
+    notes = Notes.new(prefs)
+    glob = 'note_*.txt'
+    cmd = "find \"#{@prefs.notes_dir}\" -name \"#{glob}\""
+    expect(notes).to receive(:`).with(cmd)
+    notes.find(glob)
   end
 
   it 'can open all notes' do
