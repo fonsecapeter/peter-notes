@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "PETER\-NOTES" "1" "June 2017" "" ""
+.TH "PETER\-NOTES" "1" "July 2017" "" ""
 .
 .SH "NAME"
 \fBpeter\-notes\fR \- manage your notes from the terminal
@@ -21,22 +21,35 @@
 .br
 .
 .SH "DESCRIPTION"
-This document describes the \fBpeter\-notes\fR tool\. This simple ruby gem is an awesome way to manage personal notes from the terminal\.
+Manage your notes from the console\.
+.
+.P
+If you\'re like me, you spend most of your computing time in a terminal, you have a text\-editor set up just to your liking, and you wish you could use it for everything\. Naturally, when it comes time to ditch your paper note\-pad, you refuse to to use the more popular gui\-driven apps and want to find a way to use your editor instead\.
+.
+.P
+But when you start looking for a terminal\-based notes framework (or plugin for your editor) you\'re blinded by crazy features and unwilling to learn a new tool\. You\'ve also already started keeping your notes in some text files and don\'t want to have to start over\.
+.
+.P
+Anyway, I went through the same thing and made this this lightweight tool (originally from some aliases in my bashrc) to do what I wanted it to do, which isn\'t a lot\. But, like ruby, it has a nice interface, and it\'ll stay out of the way\. That means you can choose where you keep your notes, how you organize them, how you track them (if you do), and what editor you use to write them\. So if you already have your own notes, you can just point \fBpeter\-notes\fR at them and start using worlds simplest (and coolest) notes\-manager\.
 .
 .SH "OPTIONS"
 These options provide some extra utility beyond simply opening notes for editing\.
 .
 .TP
-\fB\-s\fR, \fB\-\-search <REGEX>\fR
-Search within notes for text matching the specified \fBREGEX\fR\. If you havent guessed, this is the grep \fIhttp://linuxcommand\.org/man_pages/grep1\.html\fR part\. Specifically, its running \fBgrep \-r YOUR\-NOTES\-DIR \-e REGEX\fR\.
+\fB\-f\fR, \fB\-\-find FILE\-GLOB\fR
+Seach for notes that match the specified \fBFILE\-GLOB\fR\. This one\'s running find \fIhttp://linuxcommand\.org/man_pages/find1\.html\fR \-\- \fBfind YOUR\-NOTES\-DIR \-name FILE\-GLOB\fR\. It\'s a little more than that though, this will be fuzzy in that you can add some path info to your glob\. For example, if you ran \fBnotes \-\-find "projects/*"\fR (or \fBnotes \-\-find "pro/*"\fR), you\'d get back both \fBprojects/python/jarbs\.txt\fR and \fBprojects/ruby/peter_notes\.txt\fR\. So it\'s better than just find\. A little\.
 .
 .TP
-\fB\-f\fR, \fB\-\-find <FILE\-GLOB>\fR
-Seach for notes that match the specified file\-glob\. This ones running find \fIhttp://linuxcommand\.org/man_pages/find1\.html\fR \-\- \fBfind YOUR\-NOTES\-DIR \-name FILE\-GLOB\fR\. Its a little more than that though, this will be fuzzy in that you can add some path info to your glob\. For example, if you ran \fBnotes \-\-find "projects/*\.txt"\fR, youd get back both \fBprojects/python/jarbs\.txt\fR and \fBprojects/ruby/peter_notes\.txt\fR\. So its better than just find\. A little\.
+\fB\-l\fR, \fB\-\-list [PATH]\fR
+List all notes or, if a \fBPATH\fR is specified, list notes within the specified path\. Bet you thought this was running \fBls \-R\fR, well it\'s actually running tree \fIhttp://linuxcommand\.org/man_pages/tree1\.html\fR because it\'s much cooler \-\- \fBtree YOUR\-NOTES\-DIR/PATH\fR\.
 .
 .TP
-\fB\-l\fR, \fB\-\-list [<PATH>]\fR
-List all notes or, if a \fBPATH\fR is specified, list notes within the specified path\. Bet you thought this was running \fBls \-r\fR, well its actually running tree \fIhttp://linuxcommand\.org/man_pages/tree1\.html\fR because its much cooler \-\- \fBtree YOUR\-NOTES\-DIR/PATH\fR\.
+\fB\-n\fR, \fB\-\-new PATH\fR
+Create a new note at the specified \fBPATH\fR, making any directories in\-between, and open it\. If you don\'t give a file\-type extension, \fBpeter\-notes\fR will use the \fBextension\fR value from your preferences (below), ex: \fBnotes \-\-new path/to/my_note\fR will make \fB~/Notes/path/to/my_note\.txt\fR (with default preferences)\. If you do specify a file\-type extension, you\'ll create a note with that extension \-\- they don\'t all have to be the same! :astonished:
+.
+.TP
+\fB\-s\fR, \fB\-\-search REGEX\fR
+\fBSearch within notes for text matching the specified \fBREGEX\fR\fR, ex: \fBnotes \-\-search "\.*TODO\.*"\fR\. This isn\'t magic, it\'s just grep \fIhttp://linuxcommand\.org/man_pages/grep1\.html\fR\. Specifically, it\'s running \fBgrep \-r YOUR\-NOTES\-DIR \-e REGEX\fR\.
 .
 .SH "EXAMPLES"
 \fBnotes\fR\. Yeah\.
@@ -65,16 +78,16 @@ Lets assume you have the following notes:
 .IP "" 0
 .
 .P
-Most of the time you just want to open them\. To do that, just type \fBnotes\fR\. You can specify your text editor and where your notes are in \fB~/peter\-notes\.yaml\fR (see the preferences section below)\.
+Most of the time you just want to open them\. To do that, type \fBnotes\fR\. You can specify your text editor and where your notes are in \fB~/peter\-notes\.yaml\fR (see PREFERENCES below)\. This will basically \fBcd\fR into your notes and open them all with \fBYOUR\-EDITOR \./\fR\. Some editors don\'t super work when you open a directory, but I use vim with NerdTree \fIhttps://github\.com/scrooloose/nerdtree\fR and I\'m sure other editors have similar plugins\.
 .
 .P
-If you want to open a specific note, you can pass in a \fBfile\-glob\fR to specify which notes you want to open\. If you think a file glob is what happens when you spill coffee on your computer, just check this out this \fIhttp://tldp\.org/LDP/abs/html/globbingref\.html\fR or google it (hint, you use it in bash a lot, like, when you \fBls *\.rb\fR)\.
+If you want to open a specific note, you can pass in a \fBfile\-glob\fR to specify which one\. If you think a file glob is what happens when you spill coffee on your computer, just check this out this description \fIhttp://tldp\.org/LDP/abs/html/globbingref\.html\fR (hint, you use it in bash a lot, like, when you \fBls *\.rb\fR)\.
 .
 .P
-If you just want to open \fBother/motorcycle\.txt\fR you can run \fBnotes "other/motorcycle\.txt"\fR\. But thats kind of lame, so you could also fo \fBnotes "motorcycle\.txt"\fR, or even \fBnotes "moto*"\fR\. If youre feeling extra crazy, you could even get away with \fBm*\fR in this case, basically if you pass a glob in, \fBpeter\-notes\fR will just take the first match in \fB\-\-find\fR (see below) and open that\.
+Lets say you want to open \fBother/motorcycle\.txt\fR\. You could run \fBnotes "other/motorcycle\.txt"\fR, but that\'s kind of lame, so you could also type \fBnotes "motorcycle"\fR, or even \fBnotes "moto*"\fR\. If you\'re feeling extra crazy, you could get away with \fBm*\fR here\. Basically if you pass a glob in, \fBpeter\-notes\fR will just take the first match from \fB\-\-find\fR (see OPTIONS above) and open that\. If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBnotes "projects"\fR\.
 .
 .P
-If you wanted to open all notes under \fBprojects/\fR you could also use this same idea and run \fBnotes "projects"\fR\.
+The close observer will have noticed that I\'m leaving out \fB\.txt\fR in most of my commands\. That\'s not because \fBpeter\-notes\fR requires \fB\.txt\fR files\. In fact, you can use markdown or whatever kind of files you want, but \fBpeter\-notes\fR will totally ignore file extensions unless you provide one\. If you plan on keeping most of your notes in some file\-extension other than \fB\.txt\fR, just add a line to your preferences file (below), but it really only effects \fB\-\-new\fR\.
 .
 .P
 Thats like what 90% of what youll ever need and no crazy macros or flags to memorize\. Not bad right? Well not all flags are bad, in fact, you also get some super\-helpful optional ones for the other 10%, just look above at the OPTIONS section\.
@@ -92,19 +105,25 @@ Preferences are saved in \'~/\.peter\-notes\.yml\'\. There are just 2 options th
 editor:
     The editor of your choice\. This value will get passed to bash so
     make sure you use the exact name your terminal will understand\.
-    Possible Values: [\'vim\', \'subl\', \'atom\', \'emacs\', \'nano\']
-                     (more?) I haven\'t tested others and dont know
-                     which work well when opening a directory\. For
-                     vim I use the NerdTree plugin\.
-    Default Value: \'vim\'
+    Possible Values: [vim, subl, atom, emacs, nano, \.\.\.]
+                     (more?) I haven\'t tested others but I know
+                     they\'re out there\.
+    Default Value: vim
 
 notes_dir:
     The home of your notes\. This is where `peter\-notes` will look
     for them\.
     Possible Values: any valid + existing dorectory path\. I use
-                     \'~/GoogleDrive/Notes\' because I track mine in
+                     ~/GoogleDrive/Notes because I track mine in
                      google drive (OverGrive for linux)\.
-    Default Value: \'~/Notes\'
+    Default Value: ~/Notes
+
+extension:
+    The default file\-type extension for your notes\.
+    Possible Values: [txt, md, yml, json, html, rb, \.\.\.]
+                     anything your editor can understand that\'s a
+                     valid file extension\.
+    Default Value: txt
 .
 .fi
 .
@@ -118,7 +137,8 @@ That\'s yaml \fIhttp://www\.yaml\.org/start\.html\fR so it should look like this
 .nf
 
 editor: vim
-notes_dir: /home/peter/Notes
+notes_dir: ~/Notes
+extension: txt
 .
 .fi
 .
