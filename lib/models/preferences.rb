@@ -8,7 +8,7 @@ class Preferences
     notes_dir: File.expand_path('~/Notes')
   }
   @@aux_defaults = {
-    ignore_extension?: true
+    extension: 'txt'
   }
   @@defaults = @@aux_defaults.merge(@@primary_defaults)
   @@prefs_file = File.expand_path('~/.peter-notes.yml')

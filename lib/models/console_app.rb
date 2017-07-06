@@ -9,24 +9,30 @@ class ConsoleApp
       opts.separator('')
       opts.separator('Options:')
       opts.separator('    [FILE-GLOB]                      Open the first file that matches FILE-GLOB if supplied')
-      opts.on('-s', '--search REGEX', 'Search within notes') do |regex|
-        self.search(regex)
-        exit(0)
-      end
       opts.on('-f', '--find FILE-GLOB', 'Find notes that fuzzily match FILE-GLOB') do |glob|
-        puts(self.find(glob))
+        puts(find(glob))
         exit(0)
       end
       opts.on('-l', '--list [PATH]', 'List all notes', '  (list notes under PATH if supplied)') do |path|
-        self.list(path)
+        list(path)
         exit(0)
       end
+      opts.on('-n', '--new PATH', 'Create new note at PATH') do |path|
+        new_note(path)
+        open_notes(path)
+        exit(0)
+      end
+      opts.on('-s', '--search REGEX', 'Search within notes') do |regex|
+        search(regex)
+        exit(0)
+      end
+      opts.separator('')
       opts.on('-h', '--help', 'Show this message') do
         puts(opts)
         exit(0)
       end
       opts.on('-v', '--version', 'Show version') do
-        puts(self.version)
+        puts(version)
         exit(0)
       end
       opts.separator('')
@@ -42,6 +48,6 @@ class ConsoleApp
       puts(options)
       exit(1)
     end
-    self.on_run(arg)
+    on_run(arg)
   end
 end
