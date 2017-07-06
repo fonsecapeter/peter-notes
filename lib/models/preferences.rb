@@ -1,14 +1,17 @@
 require 'yaml'
 
 class Preferences
-  attr_reader :editor, :notes_dir, :preferences
+  attr_reader :preferences
 
-  @@home_dir = ENV['HOME']
-  @@defaults = {
+  @@primary_defaults = {
     editor: 'vim',
-    notes_dir: "#{@@home_dir}/Notes"
+    notes_dir: File.expand_path('~/Notes')
   }
-  @@prefs_file = "#{@@home_dir}/.peter-notes.yml"
+  @@aux_defaults = {
+    extension: 'txt'
+  }
+  @@defaults = @@aux_defaults.merge(@@primary_defaults)
+  @@prefs_file = File.expand_path('~/.peter-notes.yml')
 
   def self.defaults
     @@defaults
@@ -19,18 +22,20 @@ class Preferences
   end
 
   def self.defaults_yaml
-    @@defaults.to_yaml
+    @@primary_defaults.to_yaml
   end
 
   def initialize(prefs=nil)
-    @preferences = prefs || load_preferences
-    @preferences[:notes_dir] = File.expand_path(@preferences[:notes_dir])
-    @editor = @preferences[:editor]
-    @notes_dir = @preferences[:notes_dir]
+    @preferences = load_preferences(prefs)
   end
 
   def self.write_yaml_defaults
     File.write(@@prefs_file, self.defaults_yaml)
+  end
+
+  def method_missing(attribute)
+    return @preferences[attribute] if @preferences.has_key?(attribute)
+    super
   end
 
   private
@@ -45,12 +50,16 @@ class Preferences
      )
   end
 
-  def load_preferences
-    if File.exists?(@@prefs_file)
-      prefs = load_yaml_preferences
-      return(@@defaults.merge(prefs))
-    else
-      return @@defaults
+  def load_preferences(prefs)
+    if prefs.nil?
+      if File.exists?(@@prefs_file)
+        prefs = load_yaml_preferences
+      else
+        prefs = @@defaults
+      end
     end
+    merged_prefs = @@defaults.merge(prefs)
+    merged_prefs[:notes_dir] = File.expand_path(merged_prefs[:notes_dir])
+    return merged_prefs
   end
 end

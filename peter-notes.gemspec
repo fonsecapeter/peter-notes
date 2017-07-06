@@ -10,13 +10,13 @@ Gem::Specification.new do |spec|
   spec.email         = ['peter.nfonseca@gmail.com']
 
   spec.summary       = %q{Lightweight notes manager}
-  spec.description   = %q{Manage notes from the console with this minimal gem.
+  spec.description   = %q{Manage your notes from the console.
 
-If you're like me, you spend most of your computing time in a terminal. You have a text-editor that's heavily customized to your liking, and you wish you could read and write everything with it. Naturally, when it comes time to ditch the paper note-pad, you refuse to to use the more popular gui-driven apps.
+If you're like me, you spend most of your computing time in a terminal, you have a text-editor set up just to your liking, and you wish you could use it for everything. Naturally, when it comes time to ditch your paper note-pad, you refuse to to use the more popular gui-driven apps and want to find a way to use your editor instead.
 
-But when you start looking for a console-based notes framework you're blinded by crazy features and unwilling to learn a new tool. You've also already started keeping your notes in some text files and don't want to have to start over.
+But when you start looking for a terminal-based notes framework (or plugin for your editor) you're blinded by crazy features and unwilling to learn a new tool. You've also already started keeping your notes in some text files and don't want to have to start over.
 
-Anyway, I went through the same thing and made this this lightweight tool (originally from some aliases in my bashrc) to do what I wanted it to do, which isn't a lot. But, like ruby, it has a nice interface, and it'll stay out of the way. That means you can choose where you keep your notes, how you organize them, how you track them (if you do), and what editor you use to write them. So if you already have your own notes, you can just point `peter-notes` at them (see preferences below) and start using worlds simplest (and coolest) notes-manager.
+Anyway, I went through the same thing and made this this lightweight tool (originally from some aliases in my bashrc) to do what I wanted it to do, which isn't a lot. But, like ruby, it has a nice interface, and it'll stay out of the way. That means you can choose where you keep your notes, how you organize them, how you track them (if you do), and what editor you use to write them. So if you already have your own notes, you can just point `peter-notes` at them and start using worlds simplest (and coolest) notes-manager.
 
 This is a cli tool, don't try to import it into some ruby source code.}
   spec.homepage      = 'https://github.com/fonsecapeter/peter-notes'

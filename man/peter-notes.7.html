@@ -83,8 +83,13 @@
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
-<p>This document describes the <strong>peter-notes</strong> tool. This simple ruby
-gem is an awesome way to manage personal notes from the terminal.</p>
+<p>Manage your notes from the console.</p>
+
+<p>If you're like me, you spend most of your computing time in a terminal, you have a text-editor set up just to your liking, and you wish you could use it for everything. Naturally, when it comes time to ditch your paper note-pad, you refuse to to use the more popular gui-driven apps and want to find a way to use your editor instead.</p>
+
+<p>But when you start looking for a terminal-based notes framework (or plugin for your editor) you're blinded by crazy features and unwilling to learn a new tool. You've also already started keeping your notes in some text files and don't want to have to start over.</p>
+
+<p>Anyway, I went through the same thing and made this this lightweight tool (originally from some aliases in my bashrc) to do what I wanted it to do, which isn't a lot. But, like ruby, it has a nice interface, and it'll stay out of the way. That means you can choose where you keep your notes, how you organize them, how you track them (if you do), and what editor you use to write them. So if you already have your own notes, you can just point <code>peter-notes</code> at them and start using worlds simplest (and coolest) notes-manager.</p>
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
@@ -92,9 +97,10 @@ gem is an awesome way to manage personal notes from the terminal.</p>
 for editing.</p>
 
 <dl>
-<dt><code>-s</code>, <code>--search &lt;REGEX></code></dt><dd><p>Search within notes for text matching the specified <code>REGEX</code>. If you havent guessed, this is the <a href="http://linuxcommand.org/man_pages/grep1.html">grep</a> part. Specifically, its running <code>grep -r YOUR-NOTES-DIR -e REGEX</code>.</p></dd>
-<dt><code>-f</code>, <code>--find &lt;FILE-GLOB></code></dt><dd><p>Seach for notes that match the specified file-glob. This ones running <a href="http://linuxcommand.org/man_pages/find1.html">find</a> -- <code>find YOUR-NOTES-DIR -name FILE-GLOB</code>. Its a little more than that though, this will be fuzzy in that you can add some path info to your glob. For example, if you ran <code>notes --find "projects/*.txt"</code>, youd get back both <code>projects/python/jarbs.txt</code> and <code>projects/ruby/peter_notes.txt</code>. So its better than just find. A little.</p></dd>
-<dt><code>-l</code>, <code>--list [&lt;PATH>]</code></dt><dd><p>List all notes or, if a <code>PATH</code> is specified, list notes within the specified path. Bet you thought this was running <code>ls -r</code>, well its actually running <a href="http://linuxcommand.org/man_pages/tree1.html">tree</a> because its much cooler -- <code>tree YOUR-NOTES-DIR/PATH</code>.</p></dd>
+<dt><code>-f</code>, <code>--find FILE-GLOB</code></dt><dd><p>Seach for notes that match the specified <code>FILE-GLOB</code>. This one's running <a href="http://linuxcommand.org/man_pages/find1.html">find</a> -- <code>find YOUR-NOTES-DIR -name FILE-GLOB</code>. It's a little more than that though, this will be fuzzy in that you can add some path info to your glob. For example, if you ran <code>notes --find "projects/*"</code> (or <code>notes --find "pro/*"</code>), you'd get back both <code>projects/python/jarbs.txt</code> and <code>projects/ruby/peter_notes.txt</code>. So it's better than just find. A little.</p></dd>
+<dt><code>-l</code>, <code>--list [PATH]</code></dt><dd><p>List all notes or, if a <code>PATH</code> is specified, list notes within the specified path. Bet you thought this was running <code>ls -R</code>, well it's actually running <a href="http://linuxcommand.org/man_pages/tree1.html">tree</a> because it's much cooler -- <code>tree YOUR-NOTES-DIR/PATH</code>.</p></dd>
+<dt><code>-n</code>, <code>--new PATH</code></dt><dd><p>Create a new note at the specified <code>PATH</code>, making any directories in-between, and open it. If you don't give a file-type extension, <code>peter-notes</code> will use the <code>extension</code> value from your preferences (below), ex: <code>notes --new path/to/my_note</code> will make <code>~/Notes/path/to/my_note.txt</code> (with default preferences). If you do specify a file-type extension, you'll create a note with that extension -- they don't all have to be the same! :astonished:</p></dd>
+<dt><code>-s</code>, <code>--search REGEX</code></dt><dd><p><strong>Search within notes for text matching the specified <code>REGEX</code></strong>, ex: <code>notes --search ".*TODO.*"</code>. This isn't magic, it's just <a href="http://linuxcommand.org/man_pages/grep1.html">grep</a>. Specifically, it's running <code>grep -r YOUR-NOTES-DIR -e REGEX</code>.</p></dd>
 </dl>
 
 
@@ -116,13 +122,13 @@ for editing.</p>
     +-- motorcycle.txt
 </code></pre>
 
-<p>Most of the time you just want to open them. To do that, just type <code>notes</code>. You can specify your text editor and where your notes are in <code>~/peter-notes.yaml</code> (see the preferences section below).</p>
+<p>Most of the time you just want to open them. To do that, type <code>notes</code>. You can specify your text editor and where your notes are in <code>~/peter-notes.yaml</code> (see PREFERENCES below). This will basically <code>cd</code> into your notes and open them all with <code>YOUR-EDITOR ./</code>. Some editors don't super work when you open a directory, but I use vim with <a href="https://github.com/scrooloose/nerdtree">NerdTree</a> and I'm sure other editors have similar plugins.</p>
 
-<p>If you want to open a specific note, you can pass in a <code>file-glob</code> to specify which notes you want to open. If you think a file glob is what happens when you spill coffee on your computer, just check this out <a href="http://tldp.org/LDP/abs/html/globbingref.html">this</a> or google it (hint, you use it in bash a lot, like, when you <code>ls *.rb</code>).</p>
+<p>If you want to open a specific note, you can pass in a <code>file-glob</code> to specify which one. If you think a file glob is what happens when you spill coffee on your computer, just check this out <a href="http://tldp.org/LDP/abs/html/globbingref.html">this description</a> (hint, you use it in bash a lot, like, when you <code>ls *.rb</code>).</p>
 
-<p>If you just want to open <code>other/motorcycle.txt</code> you can run <code>notes "other/motorcycle.txt"</code>. But thats kind of lame, so you could also fo <code>notes "motorcycle.txt"</code>, or even <code>notes "moto*"</code>. If youre feeling extra crazy, you could even get away with <code>m*</code> in this case, basically if you pass a glob in, <code>peter-notes</code> will just take the first match in <code>--find</code> (see below) and open that.</p>
+<p>Lets say you want to open <code>other/motorcycle.txt</code>. You could run <code>notes "other/motorcycle.txt"</code>, but that's kind of lame, so you could also type <code>notes "motorcycle"</code>, or even <code>notes "moto*"</code>. If you're feeling extra crazy, you could get away with <code>m*</code> here. Basically if you pass a glob in, <code>peter-notes</code> will just take the first match from <code>--find</code> (see OPTIONS above) and open that. If you wanted to open all notes under <code>projects/</code> you could also use this same idea and run <code>notes "projects"</code>.</p>
 
-<p>If you wanted to open all notes under <code>projects/</code> you could also use this same idea and run <code>notes "projects"</code>.</p>
+<p>The close observer will have noticed that I'm leaving out <code>.txt</code> in most of my commands. That's not  because <code>peter-notes</code> requires <code>.txt</code> files. In fact, you can use markdown or whatever kind of files you want, but <code>peter-notes</code> will totally ignore file extensions unless you provide one. If you plan on keeping most of your notes in some file-extension other than <code>.txt</code>, just add a line to your preferences file (below), but it really only effects <code>--new</code>.</p>
 
 <p>Thats like what 90% of what youll ever need and no crazy macros or flags to memorize. Not bad right? Well not all flags are bad, in fact, you also get some super-helpful optional ones for the other 10%, just look above at the OPTIONS section.</p>
 
@@ -136,30 +142,37 @@ options that you can set:</p>
 <pre><code>editor:
     The editor of your choice. This value will get passed to bash so
     make sure you use the exact name your terminal will understand.
-    Possible Values: ['vim', 'subl', 'atom', 'emacs', 'nano']
-                     (more?) I haven't tested others and dont know
-                     which work well when opening a directory. For
-                     vim I use the NerdTree plugin.
-    Default Value: 'vim'
+    Possible Values: [vim, subl, atom, emacs, nano, ...]
+                     (more?) I haven't tested others but I know
+                     they're out there.
+    Default Value: vim
 
 notes_dir:
     The home of your notes. This is where `peter-notes` will look
     for them.
     Possible Values: any valid + existing dorectory path. I use
-                     '~/GoogleDrive/Notes' because I track mine in
+                     ~/GoogleDrive/Notes because I track mine in
                      google drive (OverGrive for linux).
-    Default Value: '~/Notes'
+    Default Value: ~/Notes
+
+extension:
+    The default file-type extension for your notes.
+    Possible Values: [txt, md, yml, json, html, rb, ...]
+                     anything your editor can understand that's a
+                     valid file extension.
+    Default Value: txt
 </code></pre>
 
 <p>That's <a href="http://www.yaml.org/start.html">yaml</a> so it should look like this:</p>
 
 <pre><code>editor: vim
-notes_dir: /home/peter/Notes
+notes_dir: ~/Notes
+extension: txt
 </code></pre>
 
 <h2 id="AUTHORS">AUTHORS</h2>
 
-<p>Peter Fonseca <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x70;&#101;&#x74;&#x65;&#114;&#46;&#x6e;&#102;&#x6f;&#x6e;&#115;&#x65;&#x63;&#x61;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;" data-bare-link="true">&#x70;&#x65;&#116;&#101;&#x72;&#46;&#x6e;&#x66;&#111;&#110;&#115;&#101;&#x63;&#x61;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
+<p>Peter Fonseca <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#112;&#101;&#116;&#x65;&#114;&#46;&#110;&#x66;&#111;&#110;&#115;&#101;&#99;&#97;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#111;&#x6d;" data-bare-link="true">&#x70;&#101;&#116;&#101;&#x72;&#x2e;&#x6e;&#x66;&#111;&#x6e;&#115;&#101;&#x63;&#97;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 
 <h2 id="SEE-ALSO">SEE ALSO</h2>
 
@@ -172,7 +185,7 @@ fantastic language called ruby.</p>
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>June 2017</li>
+    <li class='tc'>July 2017</li>
     <li class='tr'>peter-notes(1)</li>
   </ol>
 

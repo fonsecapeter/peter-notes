@@ -2,8 +2,13 @@
 
 require "pry"
 require "bundler/setup"
+
+require "models/files/file_name"
+require "models/files/glob"
+require "models/files/note"
+
 require "models/console_app"
-require "models/notes"
+require "models/note_book"
 require "models/preferences"
 
 Pry.start

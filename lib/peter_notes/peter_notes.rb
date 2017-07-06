@@ -1,9 +1,9 @@
 require "peter_notes/version"
 require 'models/preferences'
-require 'models/notes'
+require 'models/note_book'
 
 def run
   preferences = Preferences.new
-  notes = Notes.new(preferences)
+  notes = NoteBook.new(preferences)
   notes.run
 end
