@@ -1,6 +1,11 @@
-# Peter Notes [![Gem Version](https://badge.fury.io/rb/peter-notes.svg)](https://badge.fury.io/rb/peter-notes)  <a href="https://travis-ci.org/fonsecapeter/peter-notes"><img src="https://travis-ci.org/fonsecapeter/peter-notes.svg?branch=master"></img></a>
+<img src="media/peter-notes_384.png" width="120" alt="peter-notes icon"/>
 
-Manage your notes from the console.
+Peter Notes
+======================
+[![Gem Version](https://badge.fury.io/rb/peter-notes.svg)](https://badge.fury.io/rb/peter-notes)
+[![Build Status](https://travis-ci.org/fonsecapeter/peter-notes.svg?branch=master)](https://travis-ci.org/fonsecapeter/peter-notes)
+
+**Manage your notes from the console.**
 
 If you're like me, you spend most of your computing time in a terminal, you have a text-editor set up just to your liking, and you wish you could use it for everything. Naturally, when it comes time to ditch your paper note-pad, you refuse to to use the more popular gui-driven apps and want to find a way to use your editor instead.
 
