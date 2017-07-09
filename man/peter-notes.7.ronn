@@ -4,9 +4,10 @@ peter-notes(1) -- manage your notes from the terminal
 ## SYNOPSIS
 
 `notes` [<FILE-GLOB>] <br>
-`notes` `-s`|`--search` <REGEX> <br>
 `notes` `-f`|`--find` <FILE-GLOB> <br>
 `notes` `-l`|`--list` [<PATH>] <br>
+`notes` `-n`|`--new` <PATH> <br>
+`notes` `-s`|`--search` <REGEX> <br>
 
 ## DESCRIPTION
 
