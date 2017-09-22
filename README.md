@@ -48,19 +48,19 @@ That's like what 90% of what you'll ever need and no crazy macros or flags to me
   **Seach for notes that match the specified `FILE-GLOB`**. This one's running [find](http://linuxcommand.org/man_pages/find1.html) -- `find YOUR-NOTES-DIR -name FILE-GLOB`. It's a little more than that though, this will be fuzzy in that you can add some path info to your glob. For example, if you ran `notes --find "projects/*"` (or `notes --find "pro/*"`), you'd get back both `projects/python/jarbs.txt` and `projects/ruby/peter_notes.txt`. So it's better than just find. A little.
 
   - `-l`, `--list [PATH]`:
-  **List all notes or, if a `PATH` is specified, list notes within the specified path**. Bet you thought this was running `ls -R`, well it's actually running [tree](http://linuxcommand.org/man_pages/tree1.html) because it's much cooler -- `tree YOUR-NOTES-DIR/PATH`.
+  **List all notes or, if a `PATH` is specified, list notes within the specified path**. Bet you thought this was running `ls -R`, well it's actually running [tree](http://linuxcommand.org/man_pages/tree1.html) because it's much cooler -- `tree YOUR-NOTES-DIR/PATH`. If you have strong feelings against `tree`, check out the preferences option for `lister`.
 
   - `-n`, `--new PATH`:
   **Create a new note at the specified `PATH`, making any directories in-between, and open it**. If you don't give a file-type extension, `peter-notes` will use the `extension` value from your preferences (below), ex: `notes --new path/to/my_note` will make `~/Notes/path/to/my_note.txt` (with default preferences). If you do specify a file-type extension, you'll create a note with that extension -- they don't all have to be the same! :astonished:
 
   - `-s`, `--search REGEX`:
-  **Search within notes for text matching the specified `REGEX`**, ex: `notes --search ".*TODO.*"`. This isn't magic, it's just [grep](http://linuxcommand.org/man_pages/grep1.html). Specifically, it's running `grep -r YOUR-NOTES-DIR -e REGEX`.
+  **Search within notes for text matching the specified `REGEX`**, ex: `notes --search ".*TODO.*"`. This isn't magic, it's just [grep](http://linuxcommand.org/man_pages/grep1.html). Specifically, it's running `grep -r YOUR-NOTES-DIR -e REGEX`. If you don't conform to to society's colored-grep, check out the preferences option for `searcher`.
 
 Oh yeah, make sure your terminal has `grep`, `find`, and `tree`. It should, but depends on how crazy your 'gear' is. Also, this is a cli tool, don't try to import it into some ruby source code.
 
 ## Preferences
 
-Preferences are saved in `~/.peter-notes.yml`. There are just 3 options that you can set so don't freak out:
+Preferences are saved in `~/.peter-notes.yml`. There are just a few settings, so don't freak out:
 
   - `editor`:
   The editor of your choice. This value will get passed to bash so make sure you use the exact name your terminal will understand.
@@ -84,12 +84,29 @@ Preferences are saved in `~/.peter-notes.yml`. There are just 3 options that you
 
   **Default Value**: `txt`
 
+  - `lister`:
+  The shell command to run for `--list`. Note the interpolated value `path`.
+
+  **Possible Values**: Whatever floats your boat. You could use `ls "%{path}"`, `"ls -lR "%{path}"`, or whatever.
+
+  **Default Value**: `tree "%{path}"`
+
+  - `searcher`:
+  The shell command to run for `--search`. Note the interpolated values `notes_dir` and `regex`.
+
+  **Possible Values**: Also whatever floats your boat. Personally I use `ag "%{regex}" "%{notes_dir}"` because [ag is awesome](https://github.com/ggreer/the_silver_searcher). If you hate regex (you know who you are) adding `-Q` to that `ag` option is a great way to just do simple pure-string searches.
+
+  **Default Value**: `grep --color=always -r "%{notes_dir}" -e "%{regex}"`
+
 That's [yaml](http://www.yaml.org/start.html) so it should look like this:
 
 ```yaml
+---
 editor: vim
 notes_dir: ~/Notes
 extension: txt
+lister: tree "%{path}"
+searcher: grep --color=always -r "%{notes_dir}" -e "%{regex}"
 ```
 
 ## Development

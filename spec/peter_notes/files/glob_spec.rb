@@ -13,7 +13,7 @@ RSpec.describe Glob do
   end
 
 
-  context 'when fuzzifying' do
+  describe '#fuzzified' do
     it 'splits by dir/filename' do
       dir = 'my_notes'
       name = 'my_note.txt'

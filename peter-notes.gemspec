@@ -30,10 +30,11 @@ This is a cli tool, don't try to import it into some ruby source code.}
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'manpages', '~> 0.6.1'
-  spec.add_development_dependency 'bundler', '~> 1.15'
-  spec.add_development_dependency 'pry', '~> 0.10.4'
+  spec.add_development_dependency 'bundler', '~> 1.15.4'
+  spec.add_development_dependency 'pry', '~> 0.11.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'ronn', '~> 0.7.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'simplecov-console', '~> 0.4.2'
+  spec.add_development_dependency 'colorize', '~> 0.8.1'
 end

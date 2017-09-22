@@ -8,7 +8,9 @@ class Preferences
     notes_dir: File.expand_path('~/Notes')
   }
   @@aux_defaults = {
-    extension: 'txt'
+    extension: 'txt',
+    lister: "tree \"%{path}\"",
+    searcher: "grep --color=always -r \"%{notes_dir}\" -e \"%{regex}\""
   }
   @@defaults = @@aux_defaults.merge(@@primary_defaults)
   @@prefs_file = File.expand_path('~/.peter-notes.yml')
@@ -47,7 +49,7 @@ class Preferences
         processed[key.to_sym] = val
         processed
       end
-     )
+    )
   end
 
   def load_preferences(prefs)
