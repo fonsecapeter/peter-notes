@@ -4,16 +4,16 @@ require 'models/note_book'
 require 'peter_notes/version'
 
 RSpec.describe NoteBook do
-  let(:prefs) { Preferences.new }
+  let(:prefs) { Preferences.new(Preferences.defaults) }
   subject(:notes) { NoteBook.new(prefs) }
 
-  context 'when initializing' do
+  describe '#initialize' do
     it 'takes in preferences' do
       expect(notes.preferences).to eq(prefs)
     end
   end
 
-  context 'when opening notes' do
+  describe '#open_notes' do
     it 'opens notes on run' do
       expect(notes).to receive(:open_notes).with('')
       notes.on_run('')
@@ -40,7 +40,7 @@ RSpec.describe NoteBook do
     end
   end
 
-  context 'when using find' do
+  describe '#find' do
     it 'can find notes' do
       glob = 'note_*'
       paths = "#{prefs.notes_dir}/note_0.txt\n#{prefs.notes_dir}/note_1.txt\n"
@@ -62,23 +62,43 @@ RSpec.describe NoteBook do
     end
   end
 
-  context 'when using list' do
+  describe '#list' do
     it 'can list notes' do
       path = 'secret_notes'
-      expect(notes).to receive(:system).with("tree #{prefs.notes_dir}/#{path}")
+      expect(notes).to receive(:system).with("tree \"#{prefs.notes_dir}/#{path}\"")
       notes.list(path)
     end
-  end
 
-  context 'when using search' do
-    it 'can search through notes' do
-      regex = '^enemies$'
-      expect(notes).to receive(:system).with("grep --color=always -r #{prefs.notes_dir} -e #{regex}")
-      notes.search(regex)
+
+    context 'with a custom lister' do
+      it 'uses the lister from preferences' do
+        path = 'secret_notes'
+        prefs.preferences[:lister] = "ls \"%{path}\""
+        expect(notes).to receive(:system).with("ls \"#{prefs.notes_dir}/#{path}\"")
+        notes.list(path)
+      end
     end
   end
 
-  context 'when using new' do
+  describe '#search' do
+    it 'can search through notes' do
+      regex = '^enemies$'
+      expect(notes).to receive(:system).with("grep --color=always -r \"#{prefs.notes_dir}\" -e \"#{regex}\"")
+      notes.search(regex)
+    end
+
+    context 'with a custom searcher' do
+      it 'uses the searcher from preferences' do
+        target = 'Mr. X'
+        prefs.preferences[:searcher] = "ag \"%{regex}\" \"%{notes_dir}\" -Q"
+        expect(notes).to receive(:system).with("ag \"#{target}\" \"#{prefs.notes_dir}\" -Q")
+        notes.search(target)
+      end
+    end
+  end
+
+  describe '#new' do
+
     context 'without an extension' do
       it 'will use the preferences extension' do
         name = 'smelloscope_designs'
@@ -96,8 +116,10 @@ RSpec.describe NoteBook do
     end
   end
 
-  it 'has a version number' do
-    expect(notes.version).to eq(PeterNotes::VERSION)
+  describe '#version' do
+    it 'has a version number' do
+      expect(notes.version).to eq(PeterNotes::VERSION)
+    end
   end
 
   private

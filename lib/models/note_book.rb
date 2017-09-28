@@ -15,11 +15,14 @@ class NoteBook < ConsoleApp
   def list(path)
     path = path || ''
     notes_path = File.join(@preferences.notes_dir, path)
-    system("tree #{notes_path}")
+    system(@preferences.lister % {path: notes_path})
   end
 
   def search(regex)
-    system("grep --color=always -r #{@preferences.notes_dir} -e #{regex}")
+    system(@preferences.searcher % {
+      notes_dir: @preferences.notes_dir,
+      regex: regex
+    })
   end
 
   def new_note(path)

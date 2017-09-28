@@ -3,7 +3,7 @@ require 'models/files/note'
 
 RSpec.describe Note do
   let (:filename) { 'my_note.txt' }
-  context 'when initializing' do
+  describe '#initialize' do
     context 'with dirs' do
       it 'expands paths' do
         dirs = '~/.secret_notes'
@@ -20,12 +20,16 @@ RSpec.describe Note do
 
     context 'without dirs' do
       it 'doesnt expand paths' do
-
+        path = filename
+        expect(File).not_to receive(:expand_path)
+        note = Note.new(path)
+        expect(note.path).to eq(path)
+        expect(note.dirname).to eq('.')
       end
     end
   end
 
-  context 'when touching' do
+  describe '::touch' do
     it 'returns a new note' do
       expect(FileUtils).to receive(:makedirs)
       expect(FileUtils).to receive(:touch)

@@ -9,9 +9,11 @@ RSpec.describe Preferences do
     editor: editor,
     notes_dir: notes_dir,
     extension: 'md',
+    lister: "tree \"%{path}\"",
+    searcher: "grep --color=always -r \"%{notes_dir}\" -e \"%{regex}\"",
   } end
 
-  context 'when initializing' do
+  describe '#initialize' do
     it 'can accept a hash' do
       prefs = Preferences.new(prefs_dict)
       expect(prefs.preferences).to eq(prefs_dict)

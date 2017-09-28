@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "PETER\-NOTES" "1" "July 2017" "" ""
+.TH "PETER\-NOTES" "1" "September 2017" "" ""
 .
 .SH "NAME"
 \fBpeter\-notes\fR \- manage your notes from the terminal
@@ -44,7 +44,7 @@ Seach for notes that match the specified \fBFILE\-GLOB\fR\. This one\'s running 
 .
 .TP
 \fB\-l\fR, \fB\-\-list [PATH]\fR
-List all notes or, if a \fBPATH\fR is specified, list notes within the specified path\. Bet you thought this was running \fBls \-R\fR, well it\'s actually running tree \fIhttp://linuxcommand\.org/man_pages/tree1\.html\fR because it\'s much cooler \-\- \fBtree YOUR\-NOTES\-DIR/PATH\fR\.
+List all notes or, if a \fBPATH\fR is specified, list notes within the specified path\. Bet you thought this was running \fBls \-R\fR, well it\'s actually running tree \fIhttp://linuxcommand\.org/man_pages/tree1\.html\fR because it\'s much cooler \-\- \fBtree YOUR\-NOTES\-DIR/PATH\fR\. If you have strong feelings against \fBtree\fR, check out the preferences option for \fBlister\fR\.
 .
 .TP
 \fB\-n\fR, \fB\-\-new PATH\fR
@@ -52,7 +52,7 @@ Create a new note at the specified \fBPATH\fR, making any directories in\-betwee
 .
 .TP
 \fB\-s\fR, \fB\-\-search REGEX\fR
-\fBSearch within notes for text matching the specified \fBREGEX\fR\fR, ex: \fBnotes \-\-search "\.*TODO\.*"\fR\. This isn\'t magic, it\'s just grep \fIhttp://linuxcommand\.org/man_pages/grep1\.html\fR\. Specifically, it\'s running \fBgrep \-r YOUR\-NOTES\-DIR \-e REGEX\fR\.
+\fBSearch within notes for text matching the specified \fBREGEX\fR\fR, ex: \fBnotes \-\-search "\.*TODO\.*"\fR\. This isn\'t magic, it\'s just grep \fIhttp://linuxcommand\.org/man_pages/grep1\.html\fR\. Specifically, it\'s running \fBgrep \-r YOUR\-NOTES\-DIR \-e REGEX\fR\. If you don\'t conform to to society\'s colored\-grep, check out the preferences option for \fBsearcher\fR\.
 .
 .SH "EXAMPLES"
 \fBnotes\fR\. Yeah\.
@@ -106,27 +106,54 @@ Preferences are saved in \'~/\.peter\-notes\.yml\'\. There are just 2 options th
 .nf
 
 editor:
-    The editor of your choice\. This value will get passed to bash so
-    make sure you use the exact name your terminal will understand\.
-    Possible Values: [vim, subl, atom, emacs, nano, \.\.\.]
-                     (more?) I haven\'t tested others but I know
-                     they\'re out there\.
+    The editor of your choice\. This value will get passed to bash so make sure you use the exact name your terminal will understand\.
+
+    Possible Values:
+        [vim, subl, atom, emacs, nano, \.\.\.] (more?)
+        I haven\'t tested others but I know they\'re out there\.
+
     Default Value: vim
 
 notes_dir:
-    The home of your notes\. This is where `peter\-notes` will look
-    for them\.
-    Possible Values: any valid + existing dorectory path\. I use
-                     ~/GoogleDrive/Notes because I track mine in
-                     google drive (OverGrive for linux)\.
-    Default Value: ~/Notes
+    The home of your notes\. This is where `peter\-notes` will look for them\.
+
+    Possible Values:
+        Any valid + existing dorectory path\.
+        I use ~/GoogleDrive/Notes because I track mine in google drive (OverGrive for linux)\.
+
+    Default Value:
+        ~/Notes
 
 extension:
     The default file\-type extension for your notes\.
-    Possible Values: [txt, md, yml, json, html, rb, \.\.\.]
-                     anything your editor can understand that\'s a
-                     valid file extension\.
-    Default Value: txt
+
+    Possible Values:
+        [txt, md, yml, json, html, rb, \.\.\.]
+        Anything your editor can understand that\'s a valid file extension\.
+
+    Default Value:
+        txt
+
+lister:
+    The shell command to run for `\-\-list`\. Note the interpolated
+    value `path`\.
+
+    Possible Values:
+        Whatever floats your boat\.
+        You could use `ls "%{path}"`, `"ls \-lR "%{path}"`, or whatever\.
+
+    Default Value:
+        tree "%{path}"
+
+searcher:
+    The shell command to run for `\-\-search`\. Note the interpolated values `notes_dir` and `regex`\.
+
+    Possible Values:
+        Also whatever floats your boat\.
+        Personally I use `ag "%{regex}" "%{notes_dir}"` because [ag is awesome](https://github\.com/ggreer/the_silver_searcher)\. If you hate regex (you know who you are) adding `\-Q` to that `ag` option is a great way to just do simple pure\-string searches\.
+
+    Default Value:
+        grep \-\-color=always \-r "%{notes_dir}" \-e "%{regex}"
 .
 .fi
 .

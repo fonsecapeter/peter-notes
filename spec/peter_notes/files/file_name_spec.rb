@@ -9,7 +9,7 @@ RSpec.describe FileName do
   let (:path) { "#{dirname}/#{filename}" }
   subject(:note) { Note.new(path) }
 
-  context 'when initializing' do
+  describe '#initialize' do
     it 'sets a path, dirname, and filename' do
       expect(note.path).to eq(path)
       expect(note.dirname).to eq(dirname)
